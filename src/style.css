@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+    /* Font sizes */
+    --fs-small: 0.75rem;  /* Small font size */
+    --fs-base: 1rem;     /* Base font size */
+    --fs-medium: 1.25rem;/* Medium font size */
+    --fs-large: 1.5rem;  /* Large font size */
+    --fs-xlarge: 2rem;   /* Extra large font size */
+    --fs-xxlarge: 3rem;  /* Double extra large font size */
+
+    --fw-thin: 100;
+    --fw-extra-light: 200;
+    --fw-light: 300;
+    --fw-normal: 400;
+    --fw-medium: 500;
+    --fw-semi-bold: 600;
+    --fw-bold: 700;
+    --fw-extra-bold: 800;
+    --fw-black: 900;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;  /* Extra small spacing */
+    --spacing-sm: 0.5rem;   /* Small spacing */
+    --spacing-md: 1rem;     /* Medium spacing */
+    --spacing-lg: 1.5rem;   /* Large spacing */
+    --spacing-xl: 2rem;     /* Extra large spacing */
+    --spacing-xxl: 3rem;    /* Double extra large spacing */
+
+    --primary: #0ea5e9;
+    --secondary:  #0e7490;
+
+    --primary-bg: #343a40;
+    --white: #fff;
+
+    --btn-cl: #EB6F4C;
+
+    --ff-primary: "Playfair Display", serif
+    --ff-secondary: "Open Sans", "Roboto", sans-serif;
+}
+
+html {
+    height: 100vh;  
+    box-sizing: border-box;
+}
+      
+body {
+    background-color: var(--white);
+    margin: 0;
+}
+
+.l-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-lg) var(--spacing-xl);
+
+    background-color: #343a40;
+
+}
+
+.site-icon {
+    height: 35px;
+    width: 35px;
+}
+
+.search {
+    display: flex;
+    width: 100%;
+    margin-top: var(--spacing-md);
+}
+
+.search-input {
+    padding: var(--spacing-sm) var(--spacing-md);
+    width: clamp( 10rem, 100%, 30rem);
+
+    border: 0;
+    border-radius: 3px 0px 0px 3px;
+}
+
+.search-input:focus {
+    outline: none;
+    
+    box-shadow:  0px 0 5px #0ea5e9;
+}
+
+.search-btn {
+    padding: 0 var(--spacing-sm);
+    
+    border: none;
+    border-radius: 0px 3px 3px 0px;
+
+    color: var(--white);
+    background-color: var(--btn-cl);
+
+    font-weight: bold;
+}
+
+.toggleMetric {
+    width: 100%;
+    padding: var(--spacing-sm) 0;
+
+    background-color: #0095ff;
+    color: var(--white);
+
+    border: transparent;
+    border-radius: 5px;
+
+    font-size: var(--fs-medium);
+}
+
+/* Utilite classes */ 
+
+.fs-base {
+    font-size: var(--fs-base);
+}
