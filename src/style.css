@@ -1,156 +1,186 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 :root {
-    /* Font sizes */
-    --fs-small: 0.75rem;  /* Small font size */
-    --fs-base: 1rem;     /* Base font size */
-    --fs-medium: 1.25rem;/* Medium font size */
-    --fs-large: 1.5rem;  /* Large font size */
-    --fs-xlarge: 2rem;   /* Extra large font size */
-    --fs-xxlarge: 3rem;  /* Double extra large font size */
+  --fs-small: 0.75rem; 
+  --fs-base: 1rem;
+  --fs-medium: 1.25rem; 
+  --fs-large: 1.5rem; 
+  --fs-xlarge: 2rem; 
+  --fs-xxlarge: 3rem; 
 
-    --fw-thin: 100;
-    --fw-extra-light: 200;
-    --fw-light: 300;
-    --fw-normal: 400;
-    --fw-medium: 500;
-    --fw-semi-bold: 600;
-    --fw-bold: 700;
-    --fw-extra-bold: 800;
-    --fw-black: 900;
-    
-    /* Spacing */
-    --spacing-xs: 0.25rem;  /* Extra small spacing */
-    --spacing-sm: 0.5rem;   /* Small spacing */
-    --spacing-md: 1rem;     /* Medium spacing */
-    --spacing-lg: 1.5rem;   /* Large spacing */
-    --spacing-xl: 2rem;     /* Extra large spacing */
-    --spacing-xxl: 3rem;    /* Double extra large spacing */
+  --fw-thin: 100;
+  --fw-extra-light: 200;
+  --fw-light: 300;
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semi-bold: 600;
+  --fw-bold: 700;
+  --fw-extra-bold: 800;
+  --fw-black: 900;
 
-    --primary: #0ea5e9;
-    --secondary:  #0e7490;
+  
+  --spacing-xs: 0.25rem; 
+  --spacing-sm: 0.5rem; 
+  --spacing-md: 1rem; 
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem; 
+  --spacing-xxl: 3rem; 
 
-    --primary-bg: #343a40;
-    --white: #fff;
+  --primary: #0ea5e9;
+  --secondary: #0e7490;
 
-    --btn-cl: #EB6F4C;
+  --primary-bg: #343a40;
+  --white: #fff;
 
-    --ff-primary: "Playfair Display", serif
-    --ff-secondary: "Open Sans", "Roboto", sans-serif;
+  --btn-cl: #eb6f4c;
+
+  --ff-primary: "Open Sans", "Roboto", sans-serif
+  --ff-secondary: "Playfair Display", sans-serif;
 }
 
 html {
-    height: 100vh;  
-    box-sizing: border-box;
+  height: 100vh;
+  box-sizing: border-box;
 }
-      
+
 body {
-    background-color: var(--white);
-    margin: 0;
+  background-color: var(--white);
+  margin: 0;
+
+  font-family: var(--ff-secondary);
 }
 
 .l-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    justify-content: center;
-    align-items: center;
-    padding: var(--spacing-lg) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-lg) var(--spacing-xl);
 
-    background-color: #343a40;
-
+  background-color: #343a40;
 }
 
 .site-icon {
-    height: 35px;
-    width: 35px;
+  height: 35px;
+  width: 35px;
 }
 
 .search-form {
-    width: 100%;
+  width: 100%;
 }
 
 .search {
-    display: flex;
-    margin-top: var(--spacing-md);
-    width: 100%;
+  display: flex;
+  margin-top: var(--spacing-md);
+  width: 100%;
 }
 
 .search-input {
-    padding: var(--spacing-sm) var(--spacing-md);
-    width: clamp( 10rem, 100%, 30rem);
+  padding: var(--spacing-sm) var(--spacing-md);
+  width: clamp(10rem, 100%, 30rem);
 
-    border: 0;
-    border-radius: 3px 0px 0px 3px;
+  border: 0;
+  border-radius: 3px 0px 0px 3px;
 }
 
 .search-input:focus {
-    outline: none;
-    
-    box-shadow:  0px 0 5px #0ea5e9;
+  outline: none;
+
+  box-shadow: 0px 0 5px #0ea5e9;
 }
 
 .search-btn {
-    padding: 0 var(--spacing-sm);
-    
-    border: none;
-    border-radius: 0px 3px 3px 0px;
+  padding: 0 var(--spacing-sm);
 
-    color: var(--white);
-    background-color: var(--btn-cl);
+  border: none;
+  border-radius: 0px 3px 3px 0px;
 
-    font-weight: bold;
+  color: var(--white);
+  background-color: var(--btn-cl);
+
+  font-weight: bold;
 }
 
-
 .toggleMetric {
-    width: 100%;
-    padding: var(--spacing-sm) 0;
+  width: 100%;
+  padding: var(--spacing-sm) 0;
 
-    background-color: #0095ff;
-    color: var(--white);
+  background-color: #0095ff;
+  color: var(--white);
 
-    border: 0;
-    border-radius: 5px;
+  border: 0;
+  border-radius: 5px;
 
-    font-size: var(--fs-medium);
-    font-weight: bold;
+  font-size: var(--fs-medium);
+  font-weight: bold;
 }
 
 @media (min-width: 550px) {
-    .site-icon {
-        width: 40px;
-        height: 40px;
-    }
+  .site-icon {
+    width: 40px;
+    height: 40px;
+  }
 
-    .l-header {
-        flex-direction: row;
-    }
+  .l-header {
+    flex-direction: row;
+  }
 
-    .search {
-        margin: 0;
-    }
+  .search {
+    margin: 0;
+  }
 
-    .toggleMetric {
-        width: 5em;
-        padding: var(--spacing-sm);
-    }
+  .toggleMetric {
+    width: 5em;
+    padding: var(--spacing-sm);
+  }
 }
 
 @media (min-width: 1024px) {
-    .search {
-        margin-left: 3em;
-    }
+  .search {
+    margin-left: 3em;
+  }
 }
 
 @media (min-width: 1440px) {
-    .l-header {
-        padding: var(--spacing-xl);
-    }
+  .l-header {
+    padding: var(--spacing-xl);
+  }
 }
 
-/* Utilite classes */ 
+.mainDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.city {
+  margin-bottom: var(--spacing-sm);
+
+  text-align: center;
+  font-size: var(--fs-xlarge);
+  font-weight: 500;
+} 
+
+.city-weather {
+  margin-bottom: var(--spacing-md);
+
+  text-align: center;
+  font-size: var(--fs-large);
+}
+
+.city-temperature {
+  margin-bottom: var(--spacing-sm);
+  
+  text-align: center;
+
+  font-size: var(--fs-xxlarge);
+  font-weight: 400;
+}
+
+/* Utilite classes */
 
 .fs-base {
-    font-size: var(--fs-base);
+  font-size: var(--fs-base);
 }

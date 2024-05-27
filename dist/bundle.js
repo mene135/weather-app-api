@@ -1,115 +1,83 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./src/apiFunction.js":
-/*!****************************!*\
-  !*** ./src/apiFunction.js ***!
-  \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getCordinates: () => (/* binding */ getCordinates)
-/* harmony export */ });
+var __webpack_exports__ = {};
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+const searchBtn = document.querySelector(".search-btn");
 function getCordinates(city) {
-  fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=2815b9b71f4c4387bd5d1f3c3f298af6`).then(res => {
+  return fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=2815b9b71f4c4387bd5d1f3c3f298af6`, {
+    mode: 'cors'
+  }).then(res => {
     console.log(res);
     return res.json();
   }).then(res => {
     console.log(res);
     const {
       lat,
-      lon
+      lon,
+      name
     } = res[0];
     console.log(lat, lon);
-    getWeather(lat, lon);
+    return {
+      name,
+      lat,
+      lon
+    };
   });
 }
 function getWeather(lat, lon) {
-  fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=2815b9b71f4c4387bd5d1f3c3f298af6`).then(res => {
+  return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=2815b9b71f4c4387bd5d1f3c3f298af6&units=metric`, {
+    mode: 'cors'
+  }).then(res => {
     return res.json();
   }).then(res => {
     console.log(res);
+    return res;
   });
 }
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _apiFunction_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./apiFunction.js */ "./src/apiFunction.js");
-
-const searchBtn = document.querySelector(".search-btn");
+function roundUp(unit) {
+  return Math.round(unit);
+}
+async function handleCitySearch(city) {
+  const result = await getCordinates(city);
+  console.log(result);
+  let {
+    name: cityName,
+    lat,
+    lon
+  } = result;
+  const weather = await getWeather(lat, lon);
+  console.log(weather);
+  let {
+    temp
+  } = weather.current;
+  console.log(weather.current.weather[0].main);
+  let {
+    main
+  } = weather.current.weather[0];
+  let {
+    min,
+    max
+  } = weather.daily[0].temp;
+  console.log(`This is the min ${min} and the ${max}`);
+  console.log(main);
+  const cityDisplay = document.querySelector(".city");
+  cityDisplay.textContent = cityName;
+  console.log(temp);
+  const cityWeather = document.querySelector(".city-weather");
+  cityWeather.textContent = main;
+  const cityTemp = document.querySelector(".city-temperature");
+  cityTemp.textContent = roundUp(temp);
+  const cityHigh = document.querySelector(".city-high");
+  const cityLow = document.querySelector(".city-low");
+  cityHigh.textContent = roundUp(max);
+  cityLow.textContent = roundUp(min);
+}
 searchBtn.addEventListener("click", e => {
-  console.log("hello");
+  const searchValue = document.querySelector(".search-input").value;
+  handleCitySearch(searchValue);
   e.preventDefault();
-  const city = document.querySelector(".search-input").value;
-  (0,_apiFunction_js__WEBPACK_IMPORTED_MODULE_0__.getCordinates)(city);
 });
-})();
-
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
