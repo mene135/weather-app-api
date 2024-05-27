@@ -66,10 +66,14 @@ body {
     width: 35px;
 }
 
+.search-form {
+    width: 100%;
+}
+
 .search {
     display: flex;
-    width: 100%;
     margin-top: var(--spacing-md);
+    width: 100%;
 }
 
 .search-input {
@@ -98,6 +102,7 @@ body {
     font-weight: bold;
 }
 
+
 .toggleMetric {
     width: 100%;
     padding: var(--spacing-sm) 0;
@@ -105,10 +110,43 @@ body {
     background-color: #0095ff;
     color: var(--white);
 
-    border: transparent;
+    border: 0;
     border-radius: 5px;
 
     font-size: var(--fs-medium);
+    font-weight: bold;
+}
+
+@media (min-width: 550px) {
+    .site-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .l-header {
+        flex-direction: row;
+    }
+
+    .search {
+        margin: 0;
+    }
+
+    .toggleMetric {
+        width: 5em;
+        padding: var(--spacing-sm);
+    }
+}
+
+@media (min-width: 1024px) {
+    .search {
+        margin-left: 3em;
+    }
+}
+
+@media (min-width: 1440px) {
+    .l-header {
+        padding: var(--spacing-xl);
+    }
 }
 
 /* Utilite classes */ 
