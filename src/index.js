@@ -7,7 +7,6 @@ function getCordinates(city) {
   )
     .then((res) => {
       console.log(res)
-      if(res.)
       return res.json()
     })
     .then((res) => {
