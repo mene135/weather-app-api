@@ -12,9 +12,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getCordinates: () => (/* binding */ getCordinates)
 /* harmony export */ });
-function getCordinates() {
-  fetch("http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=2815b9b71f4c4387bd5d1f3c3f298af6").then(res => {
+function getCordinates(city) {
+  fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=2815b9b71f4c4387bd5d1f3c3f298af6`).then(res => {
     console.log(res);
+    return res.json();
+  }).then(res => {
+    console.log(res);
+    const {
+      lat,
+      lon
+    } = res[0];
+    console.log(lat, lon);
+    getWeather(lat, lon);
+  });
+}
+function getWeather(lat, lon) {
+  fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=2815b9b71f4c4387bd5d1f3c3f298af6`).then(res => {
     return res.json();
   }).then(res => {
     console.log(res);
@@ -88,7 +101,13 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _apiFunction_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./apiFunction.js */ "./src/apiFunction.js");
 
-(0,_apiFunction_js__WEBPACK_IMPORTED_MODULE_0__.getCordinates)();
+const searchBtn = document.querySelector(".search-btn");
+searchBtn.addEventListener("click", e => {
+  console.log("hello");
+  e.preventDefault();
+  const city = document.querySelector(".search-input").value;
+  (0,_apiFunction_js__WEBPACK_IMPORTED_MODULE_0__.getCordinates)(city);
+});
 })();
 
 /******/ })()
