@@ -23,13 +23,13 @@ function getCordinates(city) {
       lat,
       lon
     };
-  });
+  }).catch(error);
 }
 function getWeather(lat, lon) {
   return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=2815b9b71f4c4387bd5d1f3c3f298af6&units=metric`, {
     mode: 'cors'
   }).then(res => {
-    return res.json();
+    res.json();
   }).then(res => {
     console.log(res);
     return res;
@@ -40,38 +40,32 @@ function roundUp(unit) {
 }
 async function handleCitySearch(city) {
   const result = await getCordinates(city);
-  console.log(result);
-  let {
+  const {
     name: cityName,
     lat,
     lon
   } = result;
   const weather = await getWeather(lat, lon);
-  console.log(weather);
-  let {
-    temp
-  } = weather.current;
-  console.log(weather.current.weather[0].main);
-  let {
+  const cityDisplay = document.querySelector(".city");
+  cityDisplay.textContent = cityName;
+  const {
     main
   } = weather.current.weather[0];
-  let {
+  const cityWeather = document.querySelector(".city-weather");
+  cityWeather.textContent = main;
+  const {
+    temp
+  } = weather.current;
+  const cityTemp = document.querySelector(".city-temperature");
+  cityTemp.textContent = `${roundUp(temp)}°`;
+  const {
     min,
     max
   } = weather.daily[0].temp;
-  console.log(`This is the min ${min} and the ${max}`);
-  console.log(main);
-  const cityDisplay = document.querySelector(".city");
-  cityDisplay.textContent = cityName;
-  console.log(temp);
-  const cityWeather = document.querySelector(".city-weather");
-  cityWeather.textContent = main;
-  const cityTemp = document.querySelector(".city-temperature");
-  cityTemp.textContent = roundUp(temp);
   const cityHigh = document.querySelector(".city-high");
   const cityLow = document.querySelector(".city-low");
-  cityHigh.textContent = roundUp(max);
-  cityLow.textContent = roundUp(min);
+  cityHigh.textContent = `H:${roundUp(max)}`;
+  cityLow.textContent = `L:${roundUp(min)}`;
 }
 searchBtn.addEventListener("click", e => {
   const searchValue = document.querySelector(".search-input").value;
