@@ -1,4 +1,4 @@
-import { fromUnixTime, getHours } from "date-fns"
+import { fromUnixTime, getHours, getDay } from "date-fns"
 
 function getHourFromUnixTimestamp(unix) {
   const date = fromUnixTime(unix)
@@ -14,6 +14,41 @@ function roundUp(unit) {
 function convertPopToPercentage(unit) {
   return Math.floor(unit * 100)
 }
+
+function getDayFromUnixTimestamp(unix) {
+  const date = fromUnixTime(unix)
+  const day = getDay(date)
+
+  if(day === 0) {
+    return "Sunday"
+  } 
+
+  if(day === 1) {
+    return "Monday"
+  }
+
+  if(day === 2) {
+    return "Tuesday"
+  }
+  
+  if(day === 3) {
+    return "Wednesday"
+  }
+
+  if(day === 4) {
+    return "Thursday"
+  }
+
+  if(day === 5) {
+    return "Friday"
+  }
+
+  if(day === 6) {
+    return "Saturday"
+  }
+}
+
+getDayFromUnixTimestamp(1716976800)
 
 function getWeatherIcon(iconCode) {
   return `https://openweathermap.org/img/wn/${iconCode}@2x.png`
@@ -126,10 +161,6 @@ async function handleCitySearch(city) {
 
   const weather = await getWeather(lat, lon)
 
-  console.log(weather)
-
-  createMainDisplay(weather)
-
   const cityDisplay = document.querySelector(".city")
   cityDisplay.textContent = cityName
 
@@ -161,11 +192,50 @@ async function handleCitySearch(city) {
   }
 
   createDescription(weather.daily[0])
+  createDailyForecast(weather.daily)
 
 }
 
-function createMainDisplay() {
-  const cityDisplay = document.createElement()
+function createDailyForecast(arr) {
+  const dailyForecastContainer = document.createElement("div")
+
+  dailyForecastContainer.classList.add("dailyForecastContainer")
+
+  for(let i = 1; i < arr.length; i += 1) {
+    const dailyForecast = document.createElement("div")
+
+    const day = document.createElement("div")
+    const weatherIcon = new Image()
+    const highAndLowContainer = document.createElement("div")
+    const high = document.createElement("span")
+    const low = document.createElement("span")
+    
+    dailyForecast.classList.add("dailyForecast")
+
+    day.classList.add("dailyForecast-day")
+    weatherIcon.classList.add("dailyForecast-weatherImage")
+    highAndLowContainer.classList.add("dailyForecast-highAndLowContainer")
+    high.classList.add("dailyForecast-highAndLowContainer-high")
+    low.classList.add("dailyForecast-highAndLowContainer-low")
+
+    day.textContent = `${getDayFromUnixTimestamp(arr[i].dt)}`
+    weatherIcon.src = getWeatherIcon(arr[i].weather[0].icon)
+    high.textContent = `${roundUp(arr[i].temp.max)}°`
+    low.textContent = `${roundUp(arr[i].temp.min)}°`
+
+    highAndLowContainer.appendChild(high)
+    highAndLowContainer.appendChild(low)
+
+    dailyForecast.appendChild(day)
+    dailyForecast.appendChild(weatherIcon)
+    dailyForecast.appendChild(highAndLowContainer)
+
+    dailyForecastContainer.appendChild(dailyForecast)
+  }
+
+  const body = document.querySelector("body")
+
+  body.appendChild(dailyForecastContainer)
 }
 
 function createDescription(obj) {
@@ -179,7 +249,7 @@ function createDescription(obj) {
   description.classList.add("todaysDescription")
   descriptionParagraph.classList.add("todaysDescription-paragraph")
 
-  descriptionParagraph.textContent = `Today: ${descriptionValue}. The high will be ${roundUp(max)}°. The low will be ${roundUp(min)}°`
+  descriptionParagraph.textContent = `Today: ${descriptionValue}. The high will be ${roundUp(max)}°. The low will be ${roundUp(min)}°.`
 
   description.appendChild(descriptionParagraph)
   const body = document.querySelector("body");

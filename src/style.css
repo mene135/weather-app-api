@@ -217,10 +217,38 @@ body {
   width: auto;
 }
 
-.todaysDescription{
+.todaysDescription {
   text-align: center;
 
   font-size: var(--fs-medium);
+}
+
+.dailyForecastContainer {
+  display: grid;
+
+  align-items: center;
+  padding: 0 var(--spacing-lg);
+}
+
+.dailyForecast {
+  display: grid;
+  grid-template-columns: 95px 1fr 1fr;
+  align-items: center;
+  width: 100%;
+}
+
+.dailyForecast-weatherImage {
+  height: 80px;
+  width: auto;
+
+  justify-self: center;
+}
+
+.dailyForecast-highAndLowContainer {
+  justify-self: end;
+
+  display: flex;
+  gap: 20px;
 }
 
 /* Utilite classes */
