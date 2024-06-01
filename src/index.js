@@ -1,54 +1,63 @@
 import { getCordinates, getWeather } from "./apiFunctions"
-import { createHourlyForecast, createDescription, createDailyForecast, createGeneralInfo } from "./builderFunctions"
+import { createHourlyForecast, createDescription, createDailyForecast, createGeneralInfo, createMainInfo } from "./builderFunctions"
 import { roundUp } from "./helperFunctions"
 
 const body = document.querySelector("body")
 
-function clearHourlyForecastContainer() {
-  document.querySelector(".hourlyForecastContainer").remove()
+function clearContentWrapper() {
+  let content = document.querySelector(".weather-content-wrapper")    
+  
+  if(content) {
+    content.remove()
+  }
 }
 
 async function handleCitySearch(city) {
+  clearContentWrapper()
+
+  const weatherContentWrapper = document.createElement("div")
+  weatherContentWrapper.classList.add("weather-content-wrapper")
+  body.appendChild(weatherContentWrapper)
+
   const result = await getCordinates(city)
 
-  const { name: cityName, lat, lon } = result
+  const { lat , lon } = result
 
-  const weather = await getWeather(lat, lon)
+  const selectedMetric = document.querySelector(".selectedMetric")
+  let metricForApi;
 
-  const cityDisplay = document.querySelector(".city")
-  cityDisplay.textContent = cityName
-
-  const { main } = weather.current.weather[0]
-
-  const cityWeather = document.querySelector(".city-weather")
-  cityWeather.textContent = main
-
-  const { temp } = weather.current
-
-  const cityTemp = document.querySelector(".city-temperature")
-  cityTemp.textContent = `${roundUp(temp)}°`
-
-  const { min, max } = weather.daily[0].temp
-
-  const cityHigh = document.querySelector(".city-high")
-  const cityLow = document.querySelector(".city-low")
-
-  cityHigh.textContent = `H:${roundUp(max)}°`
-  cityLow.textContent = `L:${roundUp(min)}°`
-
-  const hourlyForecast24Arr = weather.hourly.slice(0, 24)
-
-  if (document.querySelector(".hourlyForecastContainer") !== null) {
-    clearHourlyForecastContainer()
-    createHourlyForecast(hourlyForecast24Arr)
-  } else {
-    createHourlyForecast(hourlyForecast24Arr)
+  if(selectedMetric.contains("metric-celsius")) {
+    metricForApi = "metric"
   }
 
+  if(selectedMetric.contains("metric-fahrenheit")) {
+    metricForApi = "imperial"
+  }
+
+  const weather = await getWeather(lat, lon, metricForApi)
+
+  createMainInfo(result, weather)
+  createHourlyForecast(weather)
   createDescription(weather.daily[0])
   createDailyForecast(weather.daily)
   createGeneralInfo(weather)
 }
+
+const toggleMetricBtn = document.querySelector(".toggleMetric")
+
+toggleMetricBtn.addEventListener("click", () => {
+  let celsiusMetric = document.querySelector(".metric-celsius")
+  let fahrenheitMetric = document.querySelector(".metric-fahrenheit")
+
+  if(celsiusMetric.classList.contains("selectedMetric")) {
+    celsiusMetric.classList.remove("selectedMetric")
+    fahrenheitMetric.classList.add("selectedMetric")
+
+  } else {
+    celsiusMetric.classList.add("selectedMetric")
+    fahrenheitMetric.classList.remove("selectedMetric")
+  }
+})
 
 const searchBtn = document.querySelector(".search-btn")
 

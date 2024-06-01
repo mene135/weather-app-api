@@ -23,9 +23,9 @@ export function getCordinates(city) {
       })
   }
   
-export function getWeather(lat, lon) {
+export function getWeather(lat, lon, metric) {
     return fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=2815b9b71f4c4387bd5d1f3c3f298af6&units=metric`,
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=2815b9b71f4c4387bd5d1f3c3f298af6&units=${metric}`,
       { mode: "cors" },
     )
       .then((res) => {

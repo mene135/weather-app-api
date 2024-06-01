@@ -1,9 +1,55 @@
 import { getWeatherIcon } from "./apiFunctions"
 import { roundUp, convertMetersPerSecondToKhH, convertMetersToKilometers, convertPopToPercentage, getDayFromUnixTimestamp, getHourFromUnixTimestamp, getHoursAndMinutes, findCompassDirection } from "./helperFunctions"
 
-const body = document.querySelector("body")
 
-export function createHourlyForecast(arr) {
+
+export function createMainInfo(result, weather) {
+    const mainInfo = document.createElement("div")
+    mainInfo.classList.add("mainInfoDisplay")
+
+    const { name: cityName } = result
+
+    const city = document.createElement("div")
+    city.textContent = `${cityName}`
+    city.classList.add("city")
+
+    const { main } = weather.current.weather[0]
+
+    const cityWeather = document.createElement("div")
+    cityWeather.textContent = `${main}`
+    cityWeather.classList.add("city-weather")
+
+    const { temp } = weather.current
+
+    const cityTemp = document.createElement("div")
+    cityTemp.textContent = `${roundUp(temp)}°`
+    cityTemp.classList.add("city-temperature")
+
+    const { min, max } = weather.daily[0].temp
+
+    const cityHighAndLowContainer = document.createElement("div")
+    const cityHigh = document.createElement("div")
+    const cityLow = document.createElement("div")
+
+
+    cityHigh.textContent = `H:${roundUp(max)}°`
+    cityLow.textContent = `L:${roundUp(min)}°`
+
+    cityHighAndLowContainer.classList.add("city-highAndLowTemp")
+    cityHigh.classList.add("city-high")
+    cityLow.classList.add("city-low")
+
+    cityHighAndLowContainer.append(cityHigh, cityLow)
+
+    mainInfo.append(city, cityWeather, cityTemp, cityHighAndLowContainer)
+
+    const contentWrapper = document.querySelector(".weather-content-wrapper")
+    contentWrapper.appendChild(mainInfo)
+}
+
+export function createHourlyForecast(weather) {
+    const hourlyForecast24Arr = weather.hourly.slice(0, 24)
+
     const hourlyForecastContainer = document.createElement("div")
   
     for (let i = 0; i < arr.length; i += 1) {
@@ -42,9 +88,8 @@ export function createHourlyForecast(arr) {
   
       hourlyForecastContainer.appendChild(hourlyForecast)
   
-      const body = document.querySelector("body")
-  
-      body.appendChild(hourlyForecastContainer)
+      const contentWrapper = document.querySelector(".weather-content-wrapper")
+      contentWrapper.appendChild(hourlyForecastContainer)
     }
 }
 
@@ -61,8 +106,9 @@ export function createDescription(obj) {
     descriptionParagraph.textContent = `Today: ${descriptionValue}. The high will be ${roundUp(max)}°. The low will be ${roundUp(min)}°.`
   
     description.appendChild(descriptionParagraph)
-    const body = document.querySelector("body");
-    body.appendChild(description)
+
+    const contentWrapper = document.querySelector(".weather-content-wrapper")
+    contentWrapper.appendChild(description)
 }
 
 export function createDailyForecast(arr) {
@@ -101,10 +147,9 @@ export function createDailyForecast(arr) {
   
       dailyForecastContainer.appendChild(dailyForecast)
     }
-  
-    const body = document.querySelector("body")
-  
-    body.appendChild(dailyForecastContainer)
+    
+    const contentWrapper = document.querySelector(".weather-content-wrapper")
+    contentWrapper.appendChild(dailyForecastContainer)
 }
 
 
@@ -275,6 +320,7 @@ export function createGeneralInfo(obj) {
     uviIndexContainer.append(uviIndexTitle, uviIndexValue)
   
     generalInformation.append(sunriseContainer, sunsetContainer, chanceOfRainContainer, humidityContainer, windContainer, feelsLikeContainer, precipitationContainer, precipitationContainer, visibilityContainer, uviIndexContainer)
-  
-    body.appendChild(generalInformation)
+    
+    const contentWrapper = document.querySelector(".weather-content-wrapper")
+    contentWrapper.appendChild(generalInformation)
   }
