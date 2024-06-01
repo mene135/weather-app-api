@@ -38,7 +38,7 @@
 
   --btn-cl: #eb6f4c;
 
-  --ff-primary: "Open Sans", "Roboto",sans-serif;
+  --ff-primary: "Open Sans", "Roboto", sans-serif;
   --ff-secondary: "Playfair Display", sans-serif;
 }
 
@@ -274,7 +274,7 @@ body {
   padding: var(--spacing-lg) 0;
   padding-bottom: var(--spacing-md);
 
-  border-bottom: solid 2px var(--br-dark)
+  border-bottom: solid 2px var(--br-dark);
 }
 
 .generalInformation-container-title {
