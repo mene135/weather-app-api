@@ -30,6 +30,7 @@
 
   --aside: #0ea5e9;
 
+  --br-light: #e2e8f0;
   --br-dark: #1d2124;
 
   --primary-bg: #343a40;
@@ -191,8 +192,8 @@ body {
   gap: 0.5rem;
   margin-bottom: var(--spacing-xxl);
 
-  border-top: solid 2px #e2e8f0;
-  border-bottom: solid 2px #e2e8f0;
+  border-top: solid 2px var(--br-light);
+  border-bottom: solid 2px var(--br-light);
 
   overflow-x: scroll;
 }
@@ -228,6 +229,7 @@ body {
 
 .dailyForecastContainer {
   display: grid;
+  margin-bottom: var(--spacing-lg);
 
   align-items: center;
   padding: 0 var(--spacing-lg);
@@ -238,6 +240,8 @@ body {
   grid-template-columns: 95px 1fr 1fr;
   align-items: center;
   width: 100%;
+
+  border-bottom: 2px solid var(--br-light);
 }
 
 .dailyForecast-weatherImage {
