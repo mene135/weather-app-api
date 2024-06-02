@@ -26,11 +26,11 @@ async function handleCitySearch(city) {
   const selectedMetric = document.querySelector(".selectedMetric")
   let metricForApi;
 
-  if(selectedMetric.contains("metric-celsius")) {
+  if(selectedMetric.classList.contains("metric-celsius")) {
     metricForApi = "metric"
   }
 
-  if(selectedMetric.contains("metric-fahrenheit")) {
+  if(selectedMetric.classList.contains("metric-fahrenheit")) {
     metricForApi = "imperial"
   }
 
@@ -57,6 +57,13 @@ toggleMetricBtn.addEventListener("click", () => {
     celsiusMetric.classList.add("selectedMetric")
     fahrenheitMetric.classList.remove("selectedMetric")
   }
+
+  if(document.querySelector(".weather-content-wrapper")) {
+    let city = document.querySelector(".city").textContent
+
+    handleCitySearch(city);
+  }
+
 })
 
 const searchBtn = document.querySelector(".search-btn")

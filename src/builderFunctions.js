@@ -48,11 +48,11 @@ export function createMainInfo(result, weather) {
 }
 
 export function createHourlyForecast(weather) {
-    const hourlyForecast24Arr = weather.hourly.slice(0, 24)
+    const arr24Hours = weather.hourly.slice(0, 24)
 
     const hourlyForecastContainer = document.createElement("div")
   
-    for (let i = 0; i < arr.length; i += 1) {
+    for (let i = 0; i < arr24Hours.length; i += 1) {
       const hourlyForecast = document.createElement("div")
       const hour = document.createElement("div")
       const rainChance = document.createElement("div")
@@ -70,16 +70,16 @@ export function createHourlyForecast(weather) {
       if (i === 0) {
         hour.textContent = "Now"
       } else {
-        hour.textContent = `${getHourFromUnixTimestamp(arr[i].dt)}`
+        hour.textContent = `${getHourFromUnixTimestamp(arr24Hours[i].dt)}`
       }
   
-      if (arr[i].pop !== 0) {
-        rainChance.textContent = `${convertPopToPercentage(arr[i].pop)}%`
+      if (arr24Hours[i].pop !== 0) {
+        rainChance.textContent = `${convertPopToPercentage(arr24Hours[i].pop)}%`
       }
   
-      weatherImage.src = getWeatherIcon(arr[i].weather[0].icon)
+      weatherImage.src = getWeatherIcon(arr24Hours[i].weather[0].icon)
   
-      temperature.textContent = `${roundUp(arr[i].temp)}°`
+      temperature.textContent = `${roundUp(arr24Hours[i].temp)}°`
   
       hourlyForecast.appendChild(hour)
       hourlyForecast.appendChild(rainChance)
@@ -242,7 +242,7 @@ export function createGeneralInfo(obj) {
     const feelsLikeValue = document.createElement("div")
   
     feelsLikeTitle.textContent = "FEELS LIKE"
-    feelsLikeValue.textContent = `${feels_like}°`
+    feelsLikeValue.textContent = `${roundUp(feels_like)}°`
   
     feelsLikeTitle.classList.add("generalInformation-container-title")
     feelsLikeValue.classList.add("generalInformation-container-value")
