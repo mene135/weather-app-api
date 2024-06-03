@@ -1,5 +1,5 @@
 import { getWeatherIcon } from "./apiFunctions"
-import { roundUp, convertMetersPerSecondToKhH, convertMetersToKilometers, convertPopToPercentage, getDayFromUnixTimestamp, getHourFromUnixTimestamp, getHoursAndMinutes, findCompassDirection } from "./helperFunctions"
+import { roundUp, convertMetersToKilometers, convertPopToPercentage, handleCorrectMetric, getDayFromUnixTimestamp, getHourFromUnixTimestamp, getHoursAndMinutes, findCompassDirection } from "./helperFunctions"
 
 
 
@@ -226,7 +226,10 @@ export function createGeneralInfo(obj) {
     const windValue = document.createElement("div")
   
     windTitle.textContent = "WIND"
-    windValue.textContent = `${findCompassDirection(wind_deg)} ${roundUp(convertMetersPerSecondToKhH(wind_speed))} km/hr`
+
+    let compassDirection = findCompassDirection(wind_deg)
+
+    windValue.textContent = `${(compassDirection)} ${roundUp(handleCorrectMetric(wind_speed))} km/hr`
   
     windTitle.classList.add("generalInformation-container-title")
     windValue.classList.add("generalInformation-container-value")

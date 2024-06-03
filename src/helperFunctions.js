@@ -4,19 +4,36 @@ export function convertPopToPercentage(unit) {
     return Math.floor(unit * 100)
 }
 
-export function convertMetersPerSecondToKhH(unit) {
-    return 3.6 * unit
+function convertMetersPerSecondToKhH(unit) {
+    return unit * 3.6
+}
+
+function convertMilesToKilometers(unit) {
+  return unit * 1.609344
 }
   
 export function convertMetersToKilometers(unit) {
     return unit / 100
 }
 
+
+
 export function getHourFromUnixTimestamp(unix) {
     const date = fromUnixTime(unix)
     const hour = getHours(date)
   
     return hour
+}
+
+export function handleCorrectMetric(unit) {
+  let selected = document.querySelector(".selectedMetric")
+
+  if(selected.classList.contains("metric-celsius")) {
+    let result = convertMetersPerSecondToKhH(unit)
+    return result
+  } else {
+    return convertMilesToKilometers(unit)
+  }
 }
 
 export function getDayFromUnixTimestamp(unix) {
@@ -80,9 +97,6 @@ export function findCompassDirection(deg) {
       if(directionsArr[i].degrees > deg) {
         let prevMinusDeg = deg - directionsArr[i - 1].degrees 
         let currMinusDeg = directionsArr[i].degrees - deg
-  
-        console.log(prevMinusDeg)
-        console.log(currMinusDeg)
   
         if(prevMinusDeg < currMinusDeg) {
           return directionsArr[i - 1].directionName
