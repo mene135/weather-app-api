@@ -2,7 +2,7 @@ import { getCordinates, getWeather } from "./apiFunctions"
 import { createHourlyForecast, createDescription, createDailyForecast, createGeneralInfo, createMainInfo } from "./builderFunctions"
 import { roundUp } from "./helperFunctions"
 
-const body = document.querySelector("body")
+const main = document.querySelector("main")
 
 function clearContentWrapper() {
   let content = document.querySelector(".weather-content-wrapper")    
@@ -17,7 +17,7 @@ async function handleCitySearch(city) {
 
   const weatherContentWrapper = document.createElement("div")
   weatherContentWrapper.classList.add("weather-content-wrapper")
-  body.appendChild(weatherContentWrapper)
+  main.appendChild(weatherContentWrapper)
 
   const result = await getCordinates(city)
 
@@ -84,7 +84,7 @@ const mediaQuery = window.matchMedia('(min-width: 768px')
 mediaQuery.addEventListener('change', handleMediaQuery)
 
 function handleMediaQuery(event) {
-  let generalInfo = document.querySelector(".generalInfo")
+  let generalInfo = document.querySelector(".generalInfo-container")
   let dailyForecastContainer = document.querySelector(".dailyForecastContainer")
   const contentWrapper = document.querySelector(".weather-content-wrapper")
 
