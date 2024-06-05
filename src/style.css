@@ -25,14 +25,13 @@
   --spacing-xl: 2rem;
   --spacing-xxl: 3rem;
 
-  --primary: #0ea5e9;
-  --secondary: #0e7490;
-
-  --aside: #0ea5e9;
-  --aside-hover: #71c5da;
+  --accent: #0ea5e9;
+  --accent-hover: #71c5da;
 
   --br-light: #e2e8f0;
   --br-dark: #1d2124;
+
+  --border: 2px solid;
 
   --primary-bg: #343a40;
   --white: #fff;
@@ -40,36 +39,32 @@
   --btn-cl: #eb6f4c;
   --btn-cl-hover: #e4a695;
 
-  --ff-primary: "Open Sans", "Roboto", sans-serif;
-  --ff-secondary: "Playfair Display", sans-serif;
+  --ff-fallback: "Roboto";
+  --ff-primary: "Open sans", var(--ff-fallback), sans-serif;
+  --ff-secondary: "Playfair Display", var(--ff-fallback), sans-serif;
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-html {
+body {
+  background-color: var(--white);
+  margin: 0;
   height: 100vh;
+
+  font-family: var(--ff-primary);
 }
 
 button {
   cursor: pointer;
 }
 
-body {
-  background-color: var(--white);
-  margin: 0;
-  height: 100%;
-
-  font-family: var(--ff-secondary);
-}
-
 .l-header {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-  justify-content: center;
-  align-items: center;
+  place-items: center;
   padding: var(--spacing-lg) var(--spacing-xl);
   margin-bottom: var(--spacing-lg);
 
@@ -102,7 +97,7 @@ body {
 .search-input:focus {
   outline: none;
 
-  box-shadow: 0px 0 5px var(--aside);
+  box-shadow: 0px 0 5px var(--accent);
 }
 
 .search-btn {
@@ -114,7 +109,7 @@ body {
   color: var(--white);
   background-color: var(--btn-cl);
 
-  font-weight: bold;
+  font-weight: var(--fw-bold);
 }
 
 .search-btn:hover {
@@ -125,7 +120,7 @@ body {
   width: 100%;
   padding: var(--spacing-sm) 0;
 
-  background-color: var(--aside);
+  background-color: var(--accent);
   color: var(--white);
 
   border: 0;
@@ -133,9 +128,8 @@ body {
 }
 
 .toggleMetric:hover {
-  background-color: var(--aside-hover);
+  background-color: var(--accent-hover);
 }
-
 
 .selectedMetric {
   font-size: var(--fs-medium);
@@ -143,14 +137,14 @@ body {
 }
 
 @media (min-width: 550px) {
-  .site-icon {
-    width: 40px;
-    height: 40px;
-  }
-
   .l-header {
     flex-direction: row;
     padding: var(--spacing-xl);
+  }
+
+  .site-icon {
+    width: 40px;
+    height: 40px;
   }
 
   .search {
@@ -169,12 +163,6 @@ body {
   }
 }
 
-@media (min-width: 1440px) {
-  .l-header {
-    padding: var(--spacing-xl);
-  }
-}
-
 .mainInfo {
   display: flex;
   justify-content: center;
@@ -189,7 +177,7 @@ body {
 
   text-align: center;
   font-size: var(--fs-xlarge);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 
 .city-weather {
@@ -203,9 +191,8 @@ body {
   margin-bottom: var(--spacing-sm);
 
   text-align: center;
-
   font-size: var(--fs-xxlarge);
-  font-weight: 400;
+  font-weight: var(--fs-base);
 }
 
 .city-highAndLowTemp {
@@ -222,8 +209,8 @@ body {
   padding: var(--spacing-md) 0;
   gap: 0.5rem;
 
-  border-top: solid 2px var(--br-light);
-  border-bottom: solid 2px var(--br-light);
+  border-top: var(--border) var(--br-light);
+  border-bottom: var(--border) var(--br-light);
 
   overflow-x: scroll;
 }
@@ -240,9 +227,9 @@ body {
 }
 
 .hourlyForecast-rainChance {
-  color: var(--aside);
+  color: var(--accent);
 
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 
 .hourlyForecast-weatherImage {
@@ -253,8 +240,9 @@ body {
 .todaysDescription {
   margin-bottom: var(--spacing-xxl);
   padding: 0 var(--spacing-md);
+  
+  
   text-align: center;
-
   font-family: var(--ff-primary);
   font-size: var(--fs-medium);
 }
@@ -267,7 +255,6 @@ body {
 
     justify-content: center;
     align-items: center;
-
   }
 
   .mainInfo {
@@ -302,7 +289,7 @@ body {
   align-items: center;
   width: 100%;
 
-  border-bottom: 2px solid var(--br-light);
+  border-bottom: var(--border) var(--br-light);
 }
 
 .dailyForecast-weatherImage {
@@ -313,10 +300,10 @@ body {
 }
 
 .dailyForecast-highAndLowContainer {
-  justify-self: end;
-
   display: flex;
   gap: 20px;
+
+  justify-self: end;
 }
 
 @media(min-width: 400px) {
@@ -333,13 +320,14 @@ body {
 }
 
 .generalInfo {
-  padding: var(--spacing-xl) var(--spacing-xl);
+  padding: var(--spacing-xl);
 
   background-color: var(--primary-bg);
   color: #fff;
 
-  font-family: var(--ff-primary);
+  font-family: var(--ff-secondary);
 }
+
 
 .generalInfo-container {
   display: flex;
@@ -347,7 +335,7 @@ body {
   padding: var(--spacing-lg) 0;
   padding-bottom: var(--spacing-md);
 
-  border-bottom: solid 2px var(--br-dark);
+  border-bottom: var(--border) var(--br-dark);
 }
 
 .generalInfo-container-title {
@@ -373,8 +361,4 @@ body {
   }
 }
 
-/* Utilite classes */
 
-.fs-base {
-  font-size: var(--fs-base);
-}
