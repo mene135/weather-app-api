@@ -41,6 +41,8 @@ async function handleCitySearch(city) {
   createDescription(weather.daily[0])
   createDailyForecast(weather.daily)
   createGeneralInfo(weather)
+
+  handleMediaQuery(mediaQuery)
 }
 
 const toggleMetricBtn = document.querySelector(".toggleMetric")
@@ -77,5 +79,20 @@ searchBtn.addEventListener("click", (e) => {
   e.preventDefault()
 })
 
+const mediaQuery = window.matchMedia('(min-width: 768px')
 
+mediaQuery.addEventListener('change', handleMediaQuery)
 
+function handleMediaQuery(event) {
+  let generalInfo = document.querySelector(".generalInfo")
+  let dailyForecastContainer = document.querySelector(".dailyForecastContainer")
+  const contentWrapper = document.querySelector(".weather-content-wrapper")
+
+  if(event.matches) {
+    generalInfo.remove()
+    contentWrapper.insertBefore(generalInfo, dailyForecastContainer)
+  } else {
+    generalInfo.remove()
+    contentWrapper.appendChild(generalInfo)
+  }
+}

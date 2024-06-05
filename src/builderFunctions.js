@@ -4,8 +4,11 @@ import { roundUp, convertMetersToKilometers, convertPopToPercentage, handleCorre
 
 
 export function createMainInfo(result, weather) {
+    const mainDisplay = document.createElement("div")
+    mainDisplay.classList.add("l-mainDisplay")
+
     const mainInfo = document.createElement("div")
-    mainInfo.classList.add("mainInfoDisplay")
+    mainInfo.classList.add("mainInfo")
 
     const { name: cityName } = result
 
@@ -42,9 +45,10 @@ export function createMainInfo(result, weather) {
     cityHighAndLowContainer.append(cityHigh, cityLow)
 
     mainInfo.append(city, cityWeather, cityTemp, cityHighAndLowContainer)
+    mainDisplay.appendChild(mainInfo)
 
     const contentWrapper = document.querySelector(".weather-content-wrapper")
-    contentWrapper.appendChild(mainInfo)
+    contentWrapper.appendChild(mainDisplay)
 }
 
 export function createHourlyForecast(weather) {
@@ -87,9 +91,12 @@ export function createHourlyForecast(weather) {
       hourlyForecast.appendChild(temperature)
   
       hourlyForecastContainer.appendChild(hourlyForecast)
-  
+      
+      const mainDisplay = document.querySelector(".l-mainDisplay")
+      mainDisplay.appendChild(hourlyForecastContainer)
+
       const contentWrapper = document.querySelector(".weather-content-wrapper")
-      contentWrapper.appendChild(hourlyForecastContainer)
+      contentWrapper.appendChild(mainDisplay)
     }
 }
 
@@ -107,8 +114,11 @@ export function createDescription(obj) {
   
     description.appendChild(descriptionParagraph)
 
+    const mainDisplay = document.querySelector(".l-mainDisplay")
+    mainDisplay.appendChild(description)
+
     const contentWrapper = document.querySelector(".weather-content-wrapper")
-    contentWrapper.appendChild(description)
+    contentWrapper.appendChild(mainDisplay)
 }
 
 export function createDailyForecast(arr) {
@@ -155,9 +165,9 @@ export function createDailyForecast(arr) {
 
 
 export function createGeneralInfo(obj) {
-    const generalInformation = document.createElement("div")
+    const generalInfo = document.createElement("div")
   
-    generalInformation.classList.add("generalInformation")
+    generalInfo.classList.add("generalInfo")
   
     const { sunrise, sunset } = obj.daily[0]
   
@@ -175,14 +185,14 @@ export function createGeneralInfo(obj) {
     sunsetTitle.textContent = "SUNSET"
     sunsetValue.textContent = `${getHoursAndMinutes(sunset)}`
   
-    sunriseTitle.classList.add("generalInformation-container-title")
-    sunriseValue.classList.add("generalInformation-container-value")
+    sunriseTitle.classList.add("generalInfo-container-title")
+    sunriseValue.classList.add("generalInfo-container-value")
   
-    sunsetTitle.classList.add("generalInformation-container-title")
-    sunsetValue.classList.add("generalInformation-container-value")
+    sunsetTitle.classList.add("generalInfo-container-title")
+    sunsetValue.classList.add("generalInfo-container-value")
   
-    sunriseContainer.classList.add("generalInformation-container")
-    sunsetContainer.classList.add("generalInformation-container")
+    sunriseContainer.classList.add("generalInfo-container")
+    sunsetContainer.classList.add("generalInfo-container")
   
     sunriseContainer.append(sunriseTitle, sunriseValue)
     sunsetContainer.append(sunsetTitle, sunsetValue)
@@ -196,10 +206,10 @@ export function createGeneralInfo(obj) {
     chanceOfRainTitle.textContent = "CHANCE OF RAIN"
     chanceOfRainValue.textContent = `${convertPopToPercentage(pop)}%`
   
-    chanceOfRainTitle.classList.add("generalInformation-container-title")
-    chanceOfRainValue.classList.add("generalInformation-container-value")
+    chanceOfRainTitle.classList.add("generalInfo-container-title")
+    chanceOfRainValue.classList.add("generalInfo-container-value")
   
-    chanceOfRainContainer.classList.add("generalInformation-container")
+    chanceOfRainContainer.classList.add("generalInfo-container")
   
     chanceOfRainContainer.append(chanceOfRainTitle, chanceOfRainValue)
   
@@ -212,10 +222,10 @@ export function createGeneralInfo(obj) {
     humidityTitle.textContent = "HUMIDITY"
     humidityValue.textContent = `${humidity}%`
   
-    humidityTitle.classList.add("generalInformation-container-title")
-    humidityValue.classList.add("generalInformation-container-value")
+    humidityTitle.classList.add("generalInfo-container-title")
+    humidityValue.classList.add("generalInfo-container-value")
   
-    humidityContainer.classList.add("generalInformation-container")
+    humidityContainer.classList.add("generalInfo-container")
   
     humidityContainer.append(humidityTitle, humidityValue)
   
@@ -231,10 +241,10 @@ export function createGeneralInfo(obj) {
 
     windValue.textContent = `${(compassDirection)} ${roundUp(handleCorrectMetric(wind_speed))} km/hr`
   
-    windTitle.classList.add("generalInformation-container-title")
-    windValue.classList.add("generalInformation-container-value")
+    windTitle.classList.add("generalInfo-container-title")
+    windValue.classList.add("generalInfo-container-value")
   
-    windContainer.classList.add("generalInformation-container")
+    windContainer.classList.add("generalInfo-container")
   
     windContainer.append(windTitle, windValue)
   
@@ -247,10 +257,10 @@ export function createGeneralInfo(obj) {
     feelsLikeTitle.textContent = "FEELS LIKE"
     feelsLikeValue.textContent = `${roundUp(feels_like)}°`
   
-    feelsLikeTitle.classList.add("generalInformation-container-title")
-    feelsLikeValue.classList.add("generalInformation-container-value")
+    feelsLikeTitle.classList.add("generalInfo-container-title")
+    feelsLikeValue.classList.add("generalInfo-container-value")
   
-    feelsLikeContainer.classList.add("generalInformation-container")
+    feelsLikeContainer.classList.add("generalInfo-container")
   
     feelsLikeContainer.append(feelsLikeTitle, feelsLikeValue)
   
@@ -267,10 +277,10 @@ export function createGeneralInfo(obj) {
       precipitationValue.textContent = 0;
     }
   
-    precipitationTitle.classList.add("generalInformation-container-title")
-    precipitationValue.classList.add("generalInformation-container-value")
+    precipitationTitle.classList.add("generalInfo-container-title")
+    precipitationValue.classList.add("generalInfo-container-value")
   
-    precipitationContainer.classList.add("generalInformation-container")
+    precipitationContainer.classList.add("generalInfo-container")
   
     precipitationContainer.append(precipitationTitle, precipitationValue)
   
@@ -283,10 +293,10 @@ export function createGeneralInfo(obj) {
     pressureTitle.textContent = "PRESSURE"
     pressureValue.textContent = `${pressure} hPa`
   
-    pressureTitle.classList.add("generalInformation-container-title")
-    pressureValue.classList.add("generalInformation-container-value")
+    pressureTitle.classList.add("generalInfo-container-title")
+    pressureValue.classList.add("generalInfo-container-value")
   
-    pressureContainer.classList.add("generalInformation-container")
+    pressureContainer.classList.add("generalInfo-container")
   
     pressureContainer.append(pressureTitle, pressureValue)
   
@@ -299,10 +309,10 @@ export function createGeneralInfo(obj) {
     visibilityTitle.textContent = "VISIBILITY"
     visibilityValue.textContent = `${convertMetersToKilometers(visibility)} km`
   
-    visibilityTitle.classList.add("generalInformation-container-title")
-    visibilityValue.classList.add("generalInformation-container-value")
+    visibilityTitle.classList.add("generalInfo-container-title")
+    visibilityValue.classList.add("generalInfo-container-value")
   
-    visibilityContainer.classList.add("generalInformation-container")
+    visibilityContainer.classList.add("generalInfo-container")
   
     visibilityContainer.append(visibilityTitle, visibilityValue)
   
@@ -315,15 +325,15 @@ export function createGeneralInfo(obj) {
     uviIndexTitle.textContent = "UVI INDEX" 
     uviIndexValue.textContent = `${uvi}`
   
-    uviIndexTitle.classList.add("generalInformation-container-title")
-    uviIndexValue.classList.add("generalInformation-container-value")
+    uviIndexTitle.classList.add("generalInfo-container-title")
+    uviIndexValue.classList.add("generalInfo-container-value")
   
-    uviIndexContainer.classList.add("generalInformation-container")
+    uviIndexContainer.classList.add("generalInfo-container")
   
     uviIndexContainer.append(uviIndexTitle, uviIndexValue)
   
-    generalInformation.append(sunriseContainer, sunsetContainer, chanceOfRainContainer, humidityContainer, windContainer, feelsLikeContainer, precipitationContainer, precipitationContainer, visibilityContainer, uviIndexContainer)
+    generalInfo.append(sunriseContainer, sunsetContainer, chanceOfRainContainer, humidityContainer, windContainer, pressureContainer, feelsLikeContainer, precipitationContainer, precipitationContainer, visibilityContainer, uviIndexContainer)
     
     const contentWrapper = document.querySelector(".weather-content-wrapper")
-    contentWrapper.appendChild(generalInformation)
+    contentWrapper.appendChild(generalInfo)
   }
