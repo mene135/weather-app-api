@@ -4,7 +4,6 @@ export function getCordinates(city) {
       { mode: "cors" },
     )
       .then((res) => {
-        console.log(res)
         if (res.ok === false) {
           throw new Error(
             `getCordinates fetch operation unsuccessful: ${res.status} ${res.statusText}`,
@@ -13,9 +12,7 @@ export function getCordinates(city) {
         return res.json()
       })
       .then((res) => {
-        console.log(res)
         const { lat, lon, name } = res[0]
-        console.log(lat, lon)
         return { name, lat, lon }
       })
       .catch((err) => {
@@ -37,7 +34,6 @@ export function getWeather(lat, lon, metric) {
         return res.json()
       })
       .then((res) => {
-        console.log(res)
         return res
       })
       .catch((err) => {

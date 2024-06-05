@@ -1,16 +1,8 @@
 import { getCordinates, getWeather } from "./apiFunctions"
-import { createHourlyForecast, createDescription, createDailyForecast, createGeneralInfo, createMainInfo } from "./builderFunctions"
-import { roundUp } from "./helperFunctions"
+import { createMainDisplay, createMainInfo, createHourlyForecast, createDescription, createDailyForecast, createGeneralInfo } from "./builderFunctions"
+import { clearContentWrapper, mediaQueryMin768, handleMediaQueryMin768 } from "./helperFunctions"
 
 const main = document.querySelector("main")
-
-function clearContentWrapper() {
-  let content = document.querySelector(".weather-content-wrapper")    
-  
-  if(content) {
-    content.remove()
-  }
-}
 
 async function handleCitySearch(city) {
   clearContentWrapper()
@@ -19,11 +11,11 @@ async function handleCitySearch(city) {
   weatherContentWrapper.classList.add("weather-content-wrapper")
   main.appendChild(weatherContentWrapper)
 
-  const result = await getCordinates(city)
-
-  const { lat , lon } = result
+  const coordinatesObj = await getCordinates(city)
+  const { lat , lon } = coordinatesObj
 
   const selectedMetric = document.querySelector(".selectedMetric")
+  
   let metricForApi;
 
   if(selectedMetric.classList.contains("metric-celsius")) {
@@ -34,22 +26,23 @@ async function handleCitySearch(city) {
     metricForApi = "imperial"
   }
 
-  const weather = await getWeather(lat, lon, metricForApi)
+  const weatherObj = await getWeather(lat, lon, metricForApi)
 
-  createMainInfo(result, weather)
-  createHourlyForecast(weather)
-  createDescription(weather.daily[0])
-  createDailyForecast(weather.daily)
-  createGeneralInfo(weather)
+  createMainDisplay()
+  createMainInfo(coordinatesObj, weatherObj)
+  createHourlyForecast(weatherObj)
+  createDescription(weatherObj.daily[0])
+  createDailyForecast(weatherObj.daily)
+  createGeneralInfo(weatherObj)
 
-  handleMediaQuery(mediaQuery)
+  handleMediaQueryMin768(mediaQueryMin768)
 }
 
 const toggleMetricBtn = document.querySelector(".toggleMetric")
 
 toggleMetricBtn.addEventListener("click", () => {
-  let celsiusMetric = document.querySelector(".metric-celsius")
-  let fahrenheitMetric = document.querySelector(".metric-fahrenheit")
+  const celsiusMetric = document.querySelector(".metric-celsius")
+  const fahrenheitMetric = document.querySelector(".metric-fahrenheit")
 
   if(celsiusMetric.classList.contains("selectedMetric")) {
     celsiusMetric.classList.remove("selectedMetric")
@@ -61,7 +54,7 @@ toggleMetricBtn.addEventListener("click", () => {
   }
 
   if(document.querySelector(".weather-content-wrapper")) {
-    let city = document.querySelector(".city").textContent
+    const city = document.querySelector(".city").textContent
 
     handleCitySearch(city);
   }
@@ -79,20 +72,3 @@ searchBtn.addEventListener("click", (e) => {
   e.preventDefault()
 })
 
-const mediaQuery = window.matchMedia('(min-width: 768px')
-
-mediaQuery.addEventListener('change', handleMediaQuery)
-
-function handleMediaQuery(event) {
-  let generalInfo = document.querySelector(".generalInfo-container")
-  let dailyForecastContainer = document.querySelector(".dailyForecastContainer")
-  const contentWrapper = document.querySelector(".weather-content-wrapper")
-
-  if(event.matches) {
-    generalInfo.remove()
-    contentWrapper.insertBefore(generalInfo, dailyForecastContainer)
-  } else {
-    generalInfo.remove()
-    contentWrapper.appendChild(generalInfo)
-  }
-}

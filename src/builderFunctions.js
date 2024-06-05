@@ -1,34 +1,37 @@
 import { getWeatherIcon } from "./apiFunctions"
-import { roundUp, convertMetersToKilometers, convertPopToPercentage, handleCorrectMetric, getDayFromUnixTimestamp, getHourFromUnixTimestamp, getHoursAndMinutes, findCompassDirection } from "./helperFunctions"
+import { roundUp, convertMetersToKilometers, convertPopToPercentage, handleCorrectMetric, getDayFromUnixTimestamp, getHourFromUnixTimestamp, getHoursAndMinutes, findCompassDirection, appendToMainDisplay, appendToContentWrapper } from "./helperFunctions"
 
+export function createMainDisplay() {
+  const mainDisplay = document.createElement("div")
+  mainDisplay.classList.add("l-mainDisplay")
 
+  const contentWrapper = document.querySelector(".weather-content-wrapper")
+  contentWrapper.appendChild(mainDisplay)
+}
 
-export function createMainInfo(result, weather) {
-    const mainDisplay = document.createElement("div")
-    mainDisplay.classList.add("l-mainDisplay")
-
+export function createMainInfo(cityCoordinates, weatherObj) {
     const mainInfo = document.createElement("div")
     mainInfo.classList.add("mainInfo")
 
-    const { name: cityName } = result
+    const { name: cityName } = cityCoordinates
 
     const city = document.createElement("div")
     city.textContent = `${cityName}`
     city.classList.add("city")
 
-    const { main } = weather.current.weather[0]
+    const { main } = weatherObj.current.weather[0]
 
     const cityWeather = document.createElement("div")
     cityWeather.textContent = `${main}`
     cityWeather.classList.add("city-weather")
 
-    const { temp } = weather.current
+    const { temp } = weatherObj.current
 
     const cityTemp = document.createElement("div")
     cityTemp.textContent = `${roundUp(temp)}°`
     cityTemp.classList.add("city-temperature")
 
-    const { min, max } = weather.daily[0].temp
+    const { min, max } = weatherObj.daily[0].temp
 
     const cityHighAndLowContainer = document.createElement("div")
     const cityHigh = document.createElement("div")
@@ -38,23 +41,22 @@ export function createMainInfo(result, weather) {
     cityHigh.textContent = `H:${roundUp(max)}°`
     cityLow.textContent = `L:${roundUp(min)}°`
 
-    cityHighAndLowContainer.classList.add("city-highAndLowTemp")
     cityHigh.classList.add("city-highAndLowTemp-high")
     cityLow.classList.add("city-highAndLowTemp-low")
+    cityHighAndLowContainer.classList.add("city-highAndLowTemp")
 
     cityHighAndLowContainer.append(cityHigh, cityLow)
 
     mainInfo.append(city, cityWeather, cityTemp, cityHighAndLowContainer)
-    mainDisplay.appendChild(mainInfo)
 
-    const contentWrapper = document.querySelector(".weather-content-wrapper")
-    contentWrapper.appendChild(mainDisplay)
+    appendToMainDisplay(mainInfo)
 }
 
-export function createHourlyForecast(weather) {
-    const arr24Hours = weather.hourly.slice(0, 24)
+export function createHourlyForecast(weatherObj) {
+    const arr24Hours = weatherObj.hourly.slice(0, 24)
 
     const hourlyForecastContainer = document.createElement("div")
+    hourlyForecastContainer.classList.add("hourlyForecastContainer")
   
     for (let i = 0; i < arr24Hours.length; i += 1) {
       const hourlyForecast = document.createElement("div")
@@ -63,7 +65,6 @@ export function createHourlyForecast(weather) {
       const weatherImage = new Image()
       const temperature = document.createElement("div")
   
-      hourlyForecastContainer.classList.add("hourlyForecastContainer")
   
       hourlyForecast.classList.add("hourlyForecast")
       hour.classList.add("hourlyForecast-hour")
@@ -85,24 +86,16 @@ export function createHourlyForecast(weather) {
   
       temperature.textContent = `${roundUp(arr24Hours[i].temp)}°`
   
-      hourlyForecast.appendChild(hour)
-      hourlyForecast.appendChild(rainChance)
-      hourlyForecast.appendChild(weatherImage)
-      hourlyForecast.appendChild(temperature)
-  
+      hourlyForecast.append(hour, rainChance, weatherImage, temperature)
       hourlyForecastContainer.appendChild(hourlyForecast)
-      
-      const mainDisplay = document.querySelector(".l-mainDisplay")
-      mainDisplay.appendChild(hourlyForecastContainer)
+      }
 
-      const contentWrapper = document.querySelector(".weather-content-wrapper")
-      contentWrapper.appendChild(mainDisplay)
-    }
+      appendToMainDisplay(hourlyForecastContainer)
 }
 
-export function createDescription(obj) {
-    const { max , min } = obj.temp
-    const descriptionValue = obj.weather[0].description
+export function createDescription(weatherObj) {
+    const { max , min } = weatherObj.temp
+    const descriptionValue = weatherObj.weather[0].description
   
     const description = document.createElement("div")
     const descriptionParagraph = document.createElement("p")
@@ -114,19 +107,15 @@ export function createDescription(obj) {
   
     description.appendChild(descriptionParagraph)
 
-    const mainDisplay = document.querySelector(".l-mainDisplay")
-    mainDisplay.appendChild(description)
-
-    const contentWrapper = document.querySelector(".weather-content-wrapper")
-    contentWrapper.appendChild(mainDisplay)
+    appendToMainDisplay(description)
 }
 
-export function createDailyForecast(arr) {
+export function createDailyForecast(dailyForecastArr) {
     const dailyForecastContainer = document.createElement("div")
   
     dailyForecastContainer.classList.add("dailyForecastContainer")
   
-    for(let i = 1; i < arr.length; i += 1) {
+    for(let i = 1; i < dailyForecastArr.length; i += 1) {
       const dailyForecast = document.createElement("div")
   
       const day = document.createElement("div")
@@ -143,10 +132,10 @@ export function createDailyForecast(arr) {
       high.classList.add("dailyForecast-highAndLowContainer-high")
       low.classList.add("dailyForecast-highAndLowContainer-low")
   
-      day.textContent = `${getDayFromUnixTimestamp(arr[i].dt)}`
-      weatherIcon.src = getWeatherIcon(arr[i].weather[0].icon)
-      high.textContent = `${roundUp(arr[i].temp.max)}°`
-      low.textContent = `${roundUp(arr[i].temp.min)}°`
+      day.textContent = `${getDayFromUnixTimestamp(dailyForecastArr[i].dt)}`
+      weatherIcon.src = getWeatherIcon(dailyForecastArr[i].weather[0].icon)
+      high.textContent = `${roundUp(dailyForecastArr[i].temp.max)}°`
+      low.textContent = `${roundUp(dailyForecastArr[i].temp.min)}°`
   
       highAndLowContainer.appendChild(high)
       highAndLowContainer.appendChild(low)
@@ -158,18 +147,17 @@ export function createDailyForecast(arr) {
       dailyForecastContainer.appendChild(dailyForecast)
     }
     
-    const contentWrapper = document.querySelector(".weather-content-wrapper")
-    contentWrapper.appendChild(dailyForecastContainer)
+    appendToContentWrapper(dailyForecastContainer)
 }
 
 
 
-export function createGeneralInfo(obj) {
+export function createGeneralInfo(weatherObj) {
     const generalInfoContainer = document.createElement("div")
   
     generalInfoContainer.classList.add("generalInfo-container")
   
-    const { sunrise, sunset } = obj.daily[0]
+    const { sunrise, sunset } = weatherObj.daily[0]
   
     const sunriseContainer = document.createElement("div")
     const sunriseTitle = document.createElement("div")
@@ -197,7 +185,7 @@ export function createGeneralInfo(obj) {
     sunriseContainer.append(sunriseTitle, sunriseValue)
     sunsetContainer.append(sunsetTitle, sunsetValue)
   
-    const { pop } = obj.hourly[0]
+    const { pop } = weatherObj.hourly[0]
   
     const chanceOfRainContainer = document.createElement("div")
     const chanceOfRainTitle = document.createElement("div")
@@ -213,7 +201,7 @@ export function createGeneralInfo(obj) {
   
     chanceOfRainContainer.append(chanceOfRainTitle, chanceOfRainValue)
   
-    const { humidity } = obj.hourly[0]
+    const { humidity } = weatherObj.hourly[0]
   
     const humidityContainer = document.createElement("div")
     const humidityTitle = document.createElement("div")
@@ -229,7 +217,7 @@ export function createGeneralInfo(obj) {
   
     humidityContainer.append(humidityTitle, humidityValue)
   
-    const { wind_speed, wind_deg } = obj.hourly[0]
+    const { wind_speed:windSpeed, wind_deg:windDeg } = weatherObj.hourly[0]
   
     const windContainer = document.createElement("div")
     const windTitle = document.createElement("div")
@@ -237,9 +225,9 @@ export function createGeneralInfo(obj) {
   
     windTitle.textContent = "WIND"
 
-    let compassDirection = findCompassDirection(wind_deg)
+    const compassDirection = findCompassDirection(windDeg)
 
-    windValue.textContent = `${(compassDirection)} ${roundUp(handleCorrectMetric(wind_speed))} km/hr`
+    windValue.textContent = `${(compassDirection)} ${roundUp(handleCorrectMetric(windSpeed))} km/hr`
   
     windTitle.classList.add("generalInfo-title")
     windValue.classList.add("generalInfo-value")
@@ -248,14 +236,14 @@ export function createGeneralInfo(obj) {
   
     windContainer.append(windTitle, windValue)
   
-    const { feels_like } = obj.hourly[0]
+    const { feels_like:feelsLike } = weatherObj.hourly[0]
   
     const feelsLikeContainer = document.createElement("div")
     const feelsLikeTitle = document.createElement("div")
     const feelsLikeValue = document.createElement("div")
   
     feelsLikeTitle.textContent = "FEELS LIKE"
-    feelsLikeValue.textContent = `${roundUp(feels_like)}°`
+    feelsLikeValue.textContent = `${roundUp(feelsLike)}°`
   
     feelsLikeTitle.classList.add("generalInfo-title")
     feelsLikeValue.classList.add("generalInfo-value")
@@ -264,7 +252,7 @@ export function createGeneralInfo(obj) {
   
     feelsLikeContainer.append(feelsLikeTitle, feelsLikeValue)
   
-    const { rain } = obj.daily[0]
+    const { rain } = weatherObj.daily[0]
   
     const precipitationContainer = document.createElement("div")
     const precipitationTitle = document.createElement("div")
@@ -284,7 +272,7 @@ export function createGeneralInfo(obj) {
   
     precipitationContainer.append(precipitationTitle, precipitationValue)
   
-    const { pressure } = obj.hourly[0]
+    const { pressure } = weatherObj.hourly[0]
   
     const pressureContainer = document.createElement("div")
     const pressureTitle = document.createElement("div")
@@ -300,7 +288,7 @@ export function createGeneralInfo(obj) {
   
     pressureContainer.append(pressureTitle, pressureValue)
   
-    const { visibility } = obj.hourly[0]
+    const { visibility } = weatherObj.hourly[0]
   
     const visibilityContainer = document.createElement("div")
     const visibilityTitle = document.createElement("div")
@@ -316,7 +304,7 @@ export function createGeneralInfo(obj) {
   
     visibilityContainer.append(visibilityTitle, visibilityValue)
   
-    const { uvi } = obj.hourly[0]
+    const { uvi } = weatherObj.hourly[0]
   
     const uviIndexContainer = document.createElement("div")
     const uviIndexTitle = document.createElement("div")
@@ -334,6 +322,5 @@ export function createGeneralInfo(obj) {
   
     generalInfoContainer.append(sunriseContainer, sunsetContainer, chanceOfRainContainer, humidityContainer, windContainer, pressureContainer, feelsLikeContainer, precipitationContainer, precipitationContainer, visibilityContainer, uviIndexContainer)
     
-    const contentWrapper = document.querySelector(".weather-content-wrapper")
-    contentWrapper.appendChild(generalInfoContainer)
+    appendToContentWrapper(generalInfoContainer)
   }

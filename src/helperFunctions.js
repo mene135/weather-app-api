@@ -8,7 +8,7 @@ function convertMetersPerSecondToKhH(unit) {
     return unit * 3.6
 }
 
-function convertMilesToKilometers(unit) {
+function convertMilesPerHourToKhH(unit) {
   return unit * 1.609344
 }
   
@@ -19,26 +19,21 @@ export function convertMetersToKilometers(unit) {
 
 
 export function getHourFromUnixTimestamp(unix) {
-    const date = fromUnixTime(unix)
-    const hour = getHours(date)
-  
-    return hour
+  return getHours(fromUnixTime(unix));
 }
 
 export function handleCorrectMetric(unit) {
-  let selected = document.querySelector(".selectedMetric")
+  const selected = document.querySelector(".selectedMetric")
 
   if(selected.classList.contains("metric-celsius")) {
-    let result = convertMetersPerSecondToKhH(unit)
-    return result
-  } else {
-    return convertMilesToKilometers(unit)
-  }
+    return convertMetersPerSecondToKhH(unit)
+  } 
+
+  return convertMilesPerHourToKhH(unit)
 }
 
 export function getDayFromUnixTimestamp(unix) {
-    const date = fromUnixTime(unix)
-    const day = getDay(date)
+    const day = getDay(fromUnixTime(unix))
   
     if(day === 0) {
       return "Sunday"
@@ -67,12 +62,14 @@ export function getDayFromUnixTimestamp(unix) {
     if(day === 6) {
       return "Saturday"
     }
+
+    return undefined
 }
 
 export function getHoursAndMinutes(unit) {
-    let result1 = fromUnixTime(unit)
-    let hours = getHours(result1)
-    let minutes = getMinutes(result1)
+    const date = fromUnixTime(unit)
+    const hours = getHours(date)
+    let minutes = getMinutes(date)
 
     if(minutes.toString(10).length === 1) {
         minutes = `0${minutes}`
@@ -86,7 +83,7 @@ export function roundUp(unit) {
 }
 
 export function findCompassDirection(deg) {
-    let directionsArr = [{directionName: "N", degrees: 0}, {directionName: "NNE", degrees: 22.5}, {directionName: "NE", degrees: 45}, {directionName: "ENE", degrees: 67.5}, {directionName: "E", degrees: 90}, {directionName: "ESE", degrees: 112.5}, {directionName: "SE", degrees: 135}, {directionName: "SSE", degrees: 157.5}, {directionName: "S", degrees: 180}, {directionName: "SSW", degrees: 202.5}, {directionName: "SW", degrees: 225}, {directionName: "WSW", degrees: 247.5}, {directionName: "W", degrees: 270}, {directionName: "WNW", degrees: 292.5}, {directionName: "NW", degrees: 315}, {directionName: "NNW", degrees: 337.5}, {directionName: "N", degrees: 360} ]
+    const directionsArr = [{directionName: "N", degrees: 0}, {directionName: "NNE", degrees: 22.5}, {directionName: "NE", degrees: 45}, {directionName: "ENE", degrees: 67.5}, {directionName: "E", degrees: 90}, {directionName: "ESE", degrees: 112.5}, {directionName: "SE", degrees: 135}, {directionName: "SSE", degrees: 157.5}, {directionName: "S", degrees: 180}, {directionName: "SSW", degrees: 202.5}, {directionName: "SW", degrees: 225}, {directionName: "WSW", degrees: 247.5}, {directionName: "W", degrees: 270}, {directionName: "WNW", degrees: 292.5}, {directionName: "NW", degrees: 315}, {directionName: "NNW", degrees: 337.5}, {directionName: "N", degrees: 360} ]
   
   
     for(let i = 0; i < directionsArr.length; i += 1) {
@@ -95,16 +92,55 @@ export function findCompassDirection(deg) {
       } 
   
       if(directionsArr[i].degrees > deg) {
-        let prevMinusDeg = deg - directionsArr[i - 1].degrees 
-        let currMinusDeg = directionsArr[i].degrees - deg
+        const prevMinusDeg = deg - directionsArr[i - 1].degrees 
+        const currMinusDeg = directionsArr[i].degrees - deg
   
         if(prevMinusDeg < currMinusDeg) {
           return directionsArr[i - 1].directionName
-        } else {
-          return directionsArr[i].directionName
-        }
+        } 
+
+        return directionsArr[i].directionName
+        
       }
     }
+
+    return undefined
   }
+
+export function clearContentWrapper() {
+  const content = document.querySelector(".weather-content-wrapper")    
+  
+  if(content) {
+    content.remove()
+  }
+}
+
+
+export const mediaQueryMin768 = window.matchMedia('(min-width: 768px')
+
+export function handleMediaQueryMin768(event) {
+  const generalInfoContainer = document.querySelector(".generalInfo-container")
+  const dailyForecastContainer = document.querySelector(".dailyForecastContainer")
+  const contentWrapper = document.querySelector(".weather-content-wrapper")
+
+  if(event.matches) {
+    generalInfoContainer.remove()
+    contentWrapper.insertBefore(generalInfoContainer, dailyForecastContainer)
+  } else {
+    generalInfoContainer.remove()
+    contentWrapper.appendChild(generalInfoContainer)
+  }
+}
+
+mediaQueryMin768.addEventListener('change', handleMediaQueryMin768)
+
+export function appendToMainDisplay(element) {
+  document.querySelector(".l-mainDisplay").appendChild(element);
+}
+
+export function appendToContentWrapper(element) {
+  document.querySelector(".weather-content-wrapper").appendChild(element);
+}
+
   
 
