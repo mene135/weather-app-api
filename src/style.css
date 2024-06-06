@@ -25,7 +25,7 @@
   --spacing-xl: 2rem;
   --spacing-xxl: 3rem;
 
-  --accent: #0ea5e9;
+  --accent: #1591ca;
   --accent-hover: #71c5da;
 
   --br-light: #e2e8f0;
@@ -362,8 +362,7 @@ button {
 
 .loader {
   position: absolute;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -380,7 +379,6 @@ button {
   border-radius: 50%;
 
   animation: loading 0.75s ease infinite;
-  transition: opacity 0.75s, visibility 0.75s;
 }
 
 @keyframes loading {
@@ -389,8 +387,7 @@ button {
 }
 
 .loader-isHidden {
-  opacity: 0;
-  visibility: hidden;
+  display: none;
 }
 
 

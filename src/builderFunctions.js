@@ -1,4 +1,4 @@
-import { getWeatherIcon } from "./apiFunctions"
+import { handleWeatherIcon } from "./apiFunctions"
 import {
   roundUp,
   convertMetersToKilometers,
@@ -91,7 +91,7 @@ export function createHourlyForecast(weatherObj) {
       rainChance.textContent = `${convertPopToPercentage(arr24Hours[i].pop)}%`
     }
 
-    weatherImage.src = getWeatherIcon(arr24Hours[i].weather[0].icon)
+    handleWeatherIcon(weatherImage, arr24Hours[i].weather[0].icon, arr24Hours[i].weather[0].description)
 
     temperature.textContent = `${roundUp(arr24Hours[i].temp)}°`
 
@@ -142,7 +142,7 @@ export function createDailyForecast(dailyForecastArr) {
     low.classList.add("dailyForecast-highAndLowContainer-low")
 
     day.textContent = `${getDayFromUnixTimestamp(dailyForecastArr[i].dt)}`
-    weatherIcon.src = getWeatherIcon(dailyForecastArr[i].weather[0].icon)
+    handleWeatherIcon(weatherIcon, dailyForecastArr[i].weather[0].icon, dailyForecastArr[i].weather[0].description)
     high.textContent = `${roundUp(dailyForecastArr[i].temp.max)}°`
     low.textContent = `${roundUp(dailyForecastArr[i].temp.min)}°`
 

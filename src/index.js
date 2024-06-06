@@ -20,7 +20,7 @@ function handleLoader() {
 
   if(loader.classList.contains("loader-isHidden")) {
     loader.classList.remove("loader-isHidden")
-  } else if (loader.classList.contains("loader-isHidden" === false)) {
+  } else if (loader.classList.contains("loader-isHidden") === false) {
     loader.classList.add("loader-isHidden")  
   }
 }

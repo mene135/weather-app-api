@@ -34,6 +34,7 @@ export function getWeather(lat, lon, metric) {
       return res.json()
     })
     .then((res) => {
+      console.log(res)
       return res
     })
     .catch((err) => {
@@ -41,6 +42,9 @@ export function getWeather(lat, lon, metric) {
     })
 }
 
-export function getWeatherIcon(iconCode) {
-  return `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+export function handleWeatherIcon(weatherImage, iconCode, iconDescription) {
+  weatherImage.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+  weatherImage.setAttribute("alt", `${iconDescription}`)
+  weatherImage.setAttribute("title", `${iconDescription}`)
+
 }
