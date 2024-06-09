@@ -161,8 +161,5 @@ export function appendToContentWrapper(element) {
 export function handleSearchError(err) {
   document.querySelector(".toast-message").textContent = `${err}`
   document.querySelector(".toast").classList.remove("toast-isHidden")
-  setTimeout(() => {
-    document.querySelector(".toast").classList.add("toast-isHidden")
-  }, 5000)
 }
 

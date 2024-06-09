@@ -63,6 +63,8 @@ button {
 }
 
 .l-header {
+  position: relative;
+
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -458,6 +460,7 @@ button {
 .toast-isHidden {
   transform: translate(-50%, -100%);
   opacity: 0;
+  display: none;
 }
 
 /* Utility */

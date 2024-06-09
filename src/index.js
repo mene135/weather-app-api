@@ -29,6 +29,7 @@ function handleLoader() {
 async function handleCitySearch(city) {
   clearContentWrapper()
   handleLoader()
+  document.querySelector(".toast").classList.add('toast-isHidden')
 
   const weatherContentWrapper = document.createElement("div")
   weatherContentWrapper.classList.add("weather-content-wrapper")
@@ -82,9 +83,11 @@ toggleMetricBtn.addEventListener("click", () => {
   if (celsiusMetric.classList.contains("selectedMetric")) {
     celsiusMetric.classList.remove("selectedMetric")
     fahrenheitMetric.classList.add("selectedMetric")
+    toggleMetricBtn.setAttribute("aria-label", "Toggle metric used, currently selected metric is fahrenheit, other option is celsius")
   } else {
     celsiusMetric.classList.add("selectedMetric")
     fahrenheitMetric.classList.remove("selectedMetric")
+    toggleMetricBtn.setAttribute("aria-label", "Toggle metric used, currently selected metric is celsius, other option is fahrenheit")
   }
 
   if (document.querySelector(".weather-content-wrapper")) {

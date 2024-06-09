@@ -27,7 +27,7 @@ export function getCordinates(city) {
     .catch((err) => {
       if(err.message === "Failed to fetch") {
         throw new Error (
-          'Network errror'
+          'Network error'
         )
       }
       throw err

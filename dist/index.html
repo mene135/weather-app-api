@@ -20,6 +20,7 @@
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
         class="site-icon"
+        alt=""
       >
         <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
         <path
@@ -35,14 +36,15 @@
             placeholder='Enter a city'
           />
           <button class="search-btn fs-base">Search</button>
-          <span class="search-span fs-base">*Accepted formats: "City", "City, State code", "City, Country code"</span>
+          <span class="search-span fs-base" aria-label='*Accepted formats: "City", "City State code", "City Country code", with the city seperated from the codes with commas'>*Accepted formats: "City", "City, State code", "City, Country code"</span>
         </label>
       </form>
-      <button class="toggleMetric" aria-label="toggleMetric">
-        <span class="metric-celsius selectedMetric" aria-selected="true" aria-label="metric-celsius">°C</span> /
-        <span class="metric-fahrenheit" aria-label="metric-celsius">°F</span>
+      <button class="toggleMetric" aria-label="Toggle metric used, currently selected metric is celsius, other option is fahrenheit">
+        <span class="metric-celsius selectedMetric" aria-hidden="true">°C</span> 
+        /
+        <span class="metric-fahrenheit" aria-hidden="true"">°F</span>
       </button>
-      <div class="toast toast-isHidden">
+      <div class="toast toast-isHidden" role="alert">
         <i class="fa-solid fa-circle-exclamation toast-icon"></i>
         <p class="toast-message"></p>
       </div>
