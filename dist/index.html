@@ -32,15 +32,20 @@
           <input
             type="search"
             class="search-input fs-base"
-            placeholder="Enter a city"
+            placeholder='Enter a city'
           />
           <button class="search-btn fs-base">Search</button>
+          <span class="search-span fs-base">*Accepted formats: "City", "City, State code", "City, Country code"</span>
         </label>
       </form>
       <button class="toggleMetric" aria-label="toggleMetric">
         <span class="metric-celsius selectedMetric" aria-selected="true" aria-label="metric-celsius">°C</span> /
         <span class="metric-fahrenheit" aria-label="metric-celsius">°F</span>
       </button>
+      <div class="toast toast-isHidden">
+        <i class="fa-solid fa-circle-exclamation toast-icon"></i>
+        <p class="toast-message"></p>
+      </div>
     </header>
     <main></main>
     <div class="loader loader-isHidden"></div>

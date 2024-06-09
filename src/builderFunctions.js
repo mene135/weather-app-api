@@ -10,6 +10,7 @@ import {
   findCompassDirection,
   appendToMainDisplay,
   appendToContentWrapper,
+  handleSearchError
 } from "./helperFunctions"
 
 export function createMainDisplay() {
@@ -343,4 +344,5 @@ export function createGeneralInfo(weatherObj) {
 
   appendToContentWrapper(generalInfoContainer)
 }
+
 

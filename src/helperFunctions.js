@@ -138,10 +138,10 @@ export function handleMediaQueryMin768(event) {
   )
   const contentWrapper = document.querySelector(".weather-content-wrapper")
 
-  if (event.matches) {
+  if (event.matches && generalInfoContainer) {
     generalInfoContainer.remove()
     contentWrapper.insertBefore(generalInfoContainer, dailyForecastContainer)
-  } else {
+  } else if(generalInfoContainer) {
     generalInfoContainer.remove()
     contentWrapper.appendChild(generalInfoContainer)
   }
@@ -156,3 +156,13 @@ export function appendToMainDisplay(element) {
 export function appendToContentWrapper(element) {
   document.querySelector(".weather-content-wrapper").appendChild(element)
 }
+
+
+export function handleSearchError(err) {
+  document.querySelector(".toast-message").textContent = `${err}`
+  document.querySelector(".toast").classList.remove("toast-isHidden")
+  setTimeout(() => {
+    document.querySelector(".toast").classList.add("toast-isHidden")
+  }, 5000)
+}
+

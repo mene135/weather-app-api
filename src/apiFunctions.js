@@ -1,3 +1,5 @@
+
+
 export function getCordinates(city) {
   return fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=2815b9b71f4c4387bd5d1f3c3f298af6`,
@@ -12,11 +14,23 @@ export function getCordinates(city) {
       return res.json()
     })
     .then((res) => {
-      const { lat, lon, name } = res[0]
+      if(res.length === 0) {
+        throw new Error(
+          'City not found'
+        )
+      }
+
+      const {lat, lon, name } = res[0];
+
       return { name, lat, lon }
     })
     .catch((err) => {
-      console.error(err)
+      if(err.message === "Failed to fetch") {
+        throw new Error (
+          'Network errror'
+        )
+      }
+      throw err
     })
 }
 

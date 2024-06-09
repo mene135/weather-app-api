@@ -11,6 +11,7 @@ import {
   clearContentWrapper,
   mediaQueryMin768,
   handleMediaQueryMin768,
+  handleSearchError
 } from "./helperFunctions"
 
 const main = document.querySelector("main")
@@ -32,8 +33,19 @@ async function handleCitySearch(city) {
   const weatherContentWrapper = document.createElement("div")
   weatherContentWrapper.classList.add("weather-content-wrapper")
   main.appendChild(weatherContentWrapper)
+  
+  let coordinatesObj
 
-  const coordinatesObj = await getCordinates(city)
+  try {
+     coordinatesObj = await getCordinates(city)
+     document.querySelector(".toast").classList.add("toast-isHidden")
+  } catch(err) {
+    handleLoader()
+    handleSearchError(err);
+    return
+  }
+  
+
   const { lat, lon } = coordinatesObj
 
   const selectedMetric = document.querySelector(".selectedMetric")
