@@ -32,24 +32,26 @@
         <label class="search">
           <input
             type="search"
-            class="search-input fs-base"
+            class="search-input "
             placeholder='Enter a city'
           />
-          <button class="search-btn fs-base">Search</button>
-          <span class="search-span fs-base" aria-label='*Accepted formats: "City", "City State code", "City Country code", with the city seperated from the codes with commas'>*Accepted formats: "City", "City, State code", "City, Country code"</span>
+          <button class="search-btn ">Search</button>
+          <span class="search-span " aria-label='*Accepted formats: "City", "City State code", "City Country code", with the city seperated from the codes with commas'>*Accepted formats: "City", "City, State code", "City, Country code"</span>
         </label>
       </form>
       <button class="toggleMetric" aria-label="Toggle metric used, currently selected metric is celsius, other option is fahrenheit">
-        <span class="metric-celsius selectedMetric" aria-hidden="true">°C</span> 
+        <span class="metric-celsius selectedMetric">°C</span> 
         /
-        <span class="metric-fahrenheit" aria-hidden="true"">°F</span>
+        <span class="metric-fahrenheit">°F</span>
       </button>
       <div class="toast toast-isHidden" role="alert">
         <i class="fa-solid fa-circle-exclamation toast-icon"></i>
         <p class="toast-message"></p>
       </div>
     </header>
-    <main></main>
+    <main>
+      <h1>Weather</h1>
+    </main>
     <div class="loader loader-isHidden"></div>
     <script src="./bundle.js" type="module"></script>
   </body>

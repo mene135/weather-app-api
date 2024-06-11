@@ -100,6 +100,8 @@ button {
 
   border: 0;
   border-radius: 3px 0px 0px 3px;
+
+  font-size: var(--fs-base);
 }
 
 .search-input:focus {
@@ -203,19 +205,29 @@ button {
   }
 }
 
-.mainInfo {
+h1 {
+  margin: 0;
+  margin-bottom: var(--spacing-lg);
+
+  text-align: center;
+  font-family: var(--ff-secondary);
+  font-style: italic;
+  font-size: var(--fs-xxlarge);
+}
+
+.mainInfoSection {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-xl);
+
 }
 
 .city {
   margin-bottom: var(--spacing-sm);
 
-  text-align: center;
   font-size: var(--fs-xlarge);
   font-weight: var(--fw-medium);
 }
@@ -223,14 +235,12 @@ button {
 .city-weather {
   margin-bottom: var(--spacing-md);
 
-  text-align: center;
   font-size: var(--fs-large);
 }
 
 .city-temperature {
   margin-bottom: var(--spacing-sm);
 
-  text-align: center;
   font-size: var(--fs-xxlarge);
   font-weight: var(--fs-base);
 }
@@ -242,12 +252,29 @@ button {
   gap: 10px;
 }
 
-.hourlyForecastContainer {
+.hourlyForecastSection {
   display: flex;
-  margin: 0 var(--spacing-lg);
-  margin-bottom: var(--spacing-xxl);
-  padding: var(--spacing-md) 0;
+  flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
+  
+  margin-bottom: var(--spacing-xxl);
+  padding: var(--spacing-lg);
+}
+
+.hourlyForecast-heading {
+  margin-bottom: var(--spacing-sm);
+  justify-self: flex-end;
+
+  font-family: var(--ff-secondary);
+}
+
+.hourlyForecast-list {
+  display: flex;
+  margin: 0;
+  padding: var(--spacing-lg) 0;
+  gap: 0.5rem;
+  width: 100%;
 
   border-top: var(--border) var(--br-light);
   border-bottom: var(--border) var(--br-light);
@@ -282,7 +309,6 @@ button {
   padding: 0 var(--spacing-md);
 
   text-align: center;
-  font-family: var(--ff-primary);
   font-size: var(--fs-medium);
 }
 
@@ -296,13 +322,14 @@ button {
     align-items: center;
   }
 
-  .mainInfo {
+  .mainInfoSection {
     margin: 0;
   }
 
-  .hourlyForecastContainer {
+  .hourlyForecastSection {
     margin: 0;
     margin-right: var(--spacing-lg);
+    max-width: 30rem;
 
     font-size: var(--fs-medium);
   }
@@ -313,12 +340,23 @@ button {
   }
 }
 
-.dailyForecastContainer {
+.dailyForecastSection {
   display: grid;
-  margin-bottom: var(--spacing-xxl);
+  margin-bottom: var(--spacing-lg);
 
   align-items: center;
   padding: 0 var(--spacing-lg);
+}
+
+.dailyForecast-heading {
+  margin-bottom: var(--spacing-sm);
+
+  text-align: center;
+  font-family: var(--ff-secondary);
+}
+
+.dailyForecast-list {
+  padding: 0;
 }
 
 .dailyForecast {
@@ -357,8 +395,22 @@ button {
   }
 }
 
-.generalInfo-container {
+.generalInfoSection {
   padding: var(--spacing-xl);
+
+  background-color: var(--primary-bg);
+  color: #fff;
+
+  font-family: var(--ff-secondary);
+}
+
+.generalInfo-heading {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.generalInfo-list {
+  padding: 0;
 
   background-color: var(--primary-bg);
   color: #fff;
@@ -386,7 +438,7 @@ button {
 }
 
 @media (min-width: 768px) {
-  .generalInfo-container {
+  .generalInfo-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
@@ -404,7 +456,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-top: 5rem;
+  margin-top: 10rem;
 }
 
 .loader::after {
@@ -432,7 +484,7 @@ button {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
-  bottom: -5rem;
+  bottom: -10rem;
 
   display: flex;
   align-items: center;
@@ -444,12 +496,8 @@ button {
   
   color: var(--white);
   background-color: red;
-
-  opacity: 1;
-  transition: opacity 0.25s, transform 0.25s;
-  
-
   border-radius: 5px;
+
   font-weight: var(--fw-bold);
 }
 
@@ -458,13 +506,17 @@ button {
 }
 
 .toast-isHidden {
-  transform: translate(-50%, -100%);
-  opacity: 0;
   display: none;
 }
 
-/* Utility */
-
-.fs-base {
-  font-size: var(--fs-base);
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
+

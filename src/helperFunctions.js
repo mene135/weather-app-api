@@ -129,26 +129,6 @@ export function clearContentWrapper() {
   }
 }
 
-export const mediaQueryMin768 = window.matchMedia("(min-width: 768px")
-
-export function handleMediaQueryMin768(event) {
-  const generalInfoContainer = document.querySelector(".generalInfo-container")
-  const dailyForecastContainer = document.querySelector(
-    ".dailyForecastContainer",
-  )
-  const contentWrapper = document.querySelector(".weather-content-wrapper")
-
-  if (event.matches && generalInfoContainer) {
-    generalInfoContainer.remove()
-    contentWrapper.insertBefore(generalInfoContainer, dailyForecastContainer)
-  } else if(generalInfoContainer) {
-    generalInfoContainer.remove()
-    contentWrapper.appendChild(generalInfoContainer)
-  }
-}
-
-mediaQueryMin768.addEventListener("change", handleMediaQueryMin768)
-
 export function appendToMainDisplay(element) {
   document.querySelector(".l-mainDisplay").appendChild(element)
 }
@@ -158,8 +138,4 @@ export function appendToContentWrapper(element) {
 }
 
 
-export function handleSearchError(err) {
-  document.querySelector(".toast-message").textContent = `${err}`
-  document.querySelector(".toast").classList.remove("toast-isHidden")
-}
 
