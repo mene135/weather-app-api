@@ -1,9 +1,8 @@
 import {
   handleCitySearch,
   handleMediaQueryMin768,
-  mediaQueryMin768
+  mediaQueryMin768,
 } from "./handlers"
-
 
 const toggleMetricBtn = document.querySelector(".toggleMetric")
 
@@ -14,11 +13,17 @@ toggleMetricBtn.addEventListener("click", () => {
   if (celsiusMetric.classList.contains("selectedMetric")) {
     celsiusMetric.classList.remove("selectedMetric")
     fahrenheitMetric.classList.add("selectedMetric")
-    toggleMetricBtn.setAttribute("aria-label", "Toggle metric used, currently selected metric is fahrenheit, other option is celsius")
+    toggleMetricBtn.setAttribute(
+      "aria-label",
+      "Toggle metric used, currently selected metric is fahrenheit, other option is celsius",
+    )
   } else {
     celsiusMetric.classList.add("selectedMetric")
     fahrenheitMetric.classList.remove("selectedMetric")
-    toggleMetricBtn.setAttribute("aria-label", "Toggle metric used, currently selected metric is celsius, other option is fahrenheit")
+    toggleMetricBtn.setAttribute(
+      "aria-label",
+      "Toggle metric used, currently selected metric is celsius, other option is fahrenheit",
+    )
   }
 
   if (document.querySelector(".weather-content-wrapper")) {
@@ -34,7 +39,7 @@ searchBtn.addEventListener("click", (e) => {
   e.preventDefault()
 
   const searchValue = document.querySelector(".search-input").value
-  if(searchValue === "") {
+  if (searchValue === "") {
     return
   }
 
@@ -44,11 +49,8 @@ searchBtn.addEventListener("click", (e) => {
   handleCitySearch(searchValue)
 })
 
-
 mediaQueryMin768.addEventListener("change", handleMediaQueryMin768)
-
 
 window.addEventListener("load", () => {
   handleCitySearch("London")
 })
-

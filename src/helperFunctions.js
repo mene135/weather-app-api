@@ -136,6 +136,3 @@ export function appendToMainDisplay(element) {
 export function appendToContentWrapper(element) {
   document.querySelector(".weather-content-wrapper").appendChild(element)
 }
-
-
-

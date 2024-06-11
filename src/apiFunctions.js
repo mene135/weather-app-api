@@ -1,5 +1,3 @@
-
-
 export function getCordinates(city) {
   return fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=2815b9b71f4c4387bd5d1f3c3f298af6`,
@@ -14,6 +12,7 @@ export function getCordinates(city) {
       return res.json()
     })
     .then((res) => {
+
       if(res.length === 0) {
         throw new Error(
           'City not found'
@@ -23,7 +22,7 @@ export function getCordinates(city) {
       const {lat, lon, name } = res[0];
 
       return { name, lat, lon }
-    })
+    }) 
     .catch((err) => {
       if(err.message === "Failed to fetch") {
         throw new Error (
@@ -47,18 +46,17 @@ export function getWeather(lat, lon, metric) {
       }
       return res.json()
     })
-    .then((res) => {
-      console.log(res)
-      return res
-    })
+    .then((res) => res)
     .catch((err) => {
       console.error(err)
     })
 }
 
 export function handleWeatherIcon(weatherImage, iconCode, iconDescription) {
-  weatherImage.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`
-  weatherImage.setAttribute("alt", `${iconDescription}`)
-  weatherImage.setAttribute("title", `${iconDescription}`)
+  const image = weatherImage
+
+  image.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+  image.setAttribute("alt", `${iconDescription}`)
+  image.setAttribute("title", `${iconDescription}`)
 
 }

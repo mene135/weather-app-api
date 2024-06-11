@@ -72,7 +72,6 @@ button {
   padding: var(--spacing-lg) var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
 
-
   background-color: #343a40;
 }
 
@@ -118,7 +117,7 @@ button {
 
   color: var(--white);
   background-color: var(--btn-cl);
-  
+
   font-size: var(--fs-base);
   font-weight: var(--fw-bold);
 }
@@ -154,7 +153,7 @@ button {
 
 @media (min-width: 711px) {
   .search-span {
-    bottom: -25px
+    bottom: -25px;
   }
 }
 
@@ -222,7 +221,6 @@ h1 {
   flex-direction: column;
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-xl);
-
 }
 
 .city {
@@ -257,7 +255,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  
+
   margin-bottom: var(--spacing-xxl);
   padding: var(--spacing-lg);
 }
@@ -472,8 +470,12 @@ h1 {
 }
 
 @keyframes loading {
-  from { transform: rotate(0turn);}
-  to { transform: rotate(1turn);}
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .loader-isHidden {
@@ -490,10 +492,10 @@ h1 {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  
+
   width: clamp(12rem, 90%, 20rem);
   padding: var(--spacing-sm);
-  
+
   color: var(--white);
   background-color: red;
   border-radius: 5px;
@@ -519,4 +521,3 @@ h1 {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
-

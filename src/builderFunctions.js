@@ -43,15 +43,15 @@ export function createMainInfo(cityCoordinates, weatherObj) {
   cityTemp.classList.add("city-temperature")
 
   const selectedMetric = document.querySelector(".selectedMetric")
-  let metric;
+  let metric
 
-  if(selectedMetric.classList.contains("metric-celsius")) {
+  if (selectedMetric.classList.contains("metric-celsius")) {
     metric = "Celsius"
   } else {
     metric = "Fahrenheit"
   }
 
-  const cityTempSrText = document.createElement("span") 
+  const cityTempSrText = document.createElement("span")
   cityTempSrText.textContent = `${metric}`
   cityTempSrText.classList.add("visually-hidden")
 
@@ -113,7 +113,11 @@ export function createHourlyForecast(weatherObj) {
       rainChance.textContent = `${convertPopToPercentage(arr24Hours[i].pop)}%`
     }
 
-    handleWeatherIcon(weatherImage, arr24Hours[i].weather[0].icon, arr24Hours[i].weather[0].description)
+    handleWeatherIcon(
+      weatherImage,
+      arr24Hours[i].weather[0].icon,
+      arr24Hours[i].weather[0].description,
+    )
 
     temperature.textContent = `${roundUp(arr24Hours[i].temp)}°`
 
@@ -173,7 +177,11 @@ export function createDailyForecast(dailyForecastArr) {
     low.classList.add("dailyForecast-highAndLowContainer-low")
 
     day.textContent = `${getDayFromUnixTimestamp(dailyForecastArr[i].dt)}`
-    handleWeatherIcon(weatherIcon, dailyForecastArr[i].weather[0].icon, dailyForecastArr[i].weather[0].description)
+    handleWeatherIcon(
+      weatherIcon,
+      dailyForecastArr[i].weather[0].icon,
+      dailyForecastArr[i].weather[0].description,
+    )
     high.textContent = `${roundUp(dailyForecastArr[i].temp.max)}°`
     low.textContent = `${roundUp(dailyForecastArr[i].temp.min)}°`
 
@@ -383,5 +391,3 @@ export function createGeneralInfo(weatherObj) {
 
   appendToContentWrapper(generalInfoSection)
 }
-
-
