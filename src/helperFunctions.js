@@ -4,11 +4,11 @@ export function convertPopToPercentage(unit) {
   return Math.floor(unit * 100)
 }
 
-function convertMetersPerSecondToKhH(unit) {
+export function convertMetersPerSecondToKhH(unit) {
   return unit * 3.6
 }
 
-function convertMilesPerHourToKhH(unit) {
+export function convertMilesPerHourToKhH(unit) {
   return unit * 1.609344
 }
 
@@ -18,16 +18,6 @@ export function convertMetersToKilometers(unit) {
 
 export function getHourFromUnixTimestamp(unix) {
   return getHours(fromUnixTime(unix))
-}
-
-export function handleCorrectMetric(unit) {
-  const selected = document.querySelector(".selectedMetric")
-
-  if (selected.classList.contains("metric-celsius")) {
-    return convertMetersPerSecondToKhH(unit)
-  }
-
-  return convertMilesPerHourToKhH(unit)
 }
 
 export function getDayFromUnixTimestamp(unix) {
@@ -69,6 +59,7 @@ export function getHoursAndMinutes(unit) {
   const hours = getHours(date)
   let minutes = getMinutes(date)
 
+  // check if the lenght of the minutes is 1 if so it prepends a 0 to avoid confusion example: instead of 20:4 its 20:04
   if (minutes.toString(10).length === 1) {
     minutes = `0${minutes}`
   }
@@ -80,7 +71,7 @@ export function roundUp(unit) {
   return Math.round(unit)
 }
 
-export function findCompassDirection(deg) {
+export function findWindDirection(deg) {
   const directionsArr = [
     { directionName: "N", degrees: 0 },
     { directionName: "NNE", degrees: 22.5 },
@@ -102,10 +93,12 @@ export function findCompassDirection(deg) {
   ]
 
   for (let i = 0; i < directionsArr.length; i += 1) {
+    // Checks if the degrees directly match the an directionName
     if (directionsArr[i].degrees === deg) {
       return directionsArr[i].directionName
     }
 
+    // Checks if the degree in the arr are more that the degree parameter if so it compares the current elemnt with the previous to find which one is closer
     if (directionsArr[i].degrees > deg) {
       const prevMinusDeg = deg - directionsArr[i - 1].degrees
       const currMinusDeg = directionsArr[i].degrees - deg

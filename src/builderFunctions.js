@@ -3,14 +3,14 @@ import {
   roundUp,
   convertMetersToKilometers,
   convertPopToPercentage,
-  handleCorrectMetric,
   getDayFromUnixTimestamp,
   getHourFromUnixTimestamp,
   getHoursAndMinutes,
-  findCompassDirection,
+  findWindDirection,
   appendToMainDisplay,
   appendToContentWrapper,
 } from "./helperFunctions"
+import { handleCorrectMetric } from "./handlers"
 
 export function createMainDisplay() {
   const mainDisplay = document.createElement("div")
@@ -42,6 +42,7 @@ export function createMainInfo(cityCoordinates, weatherObj) {
   cityTemp.textContent = `${roundUp(temp)}°`
   cityTemp.classList.add("city-temperature")
 
+  // Checks selected metric so that additional text is provided for screen readers as non sighted users may skip or not remember current selected metric
   const selectedMetric = document.querySelector(".selectedMetric")
   let metric
 
@@ -103,6 +104,7 @@ export function createHourlyForecast(weatherObj) {
     weatherImage.classList.add("hourlyForecast-weatherImage")
     temperature.classList.add("hourlyForecast-temperature")
 
+    // Gives current hour the text now.
     if (i === 0) {
       hour.textContent = "Now"
     } else {
@@ -113,6 +115,7 @@ export function createHourlyForecast(weatherObj) {
       rainChance.textContent = `${convertPopToPercentage(arr24Hours[i].pop)}%`
     }
 
+    // Takes image element, icon src, and icon description and sets the src, alt and title attributes
     handleWeatherIcon(
       weatherImage,
       arr24Hours[i].weather[0].icon,
@@ -131,7 +134,7 @@ export function createHourlyForecast(weatherObj) {
 
 export function createDescription(weatherObj) {
   const { max, min } = weatherObj.temp
-  const descriptionValue = weatherObj.weather[0].description
+  const weatherDescription = weatherObj.weather[0].description
 
   const description = document.createElement("section")
   description.setAttribute("aria-label", "todays description")
@@ -141,7 +144,7 @@ export function createDescription(weatherObj) {
   description.classList.add("todaysDescription")
   descriptionParagraph.classList.add("todaysDescription-paragraph")
 
-  descriptionParagraph.textContent = `Today: ${descriptionValue}. The high will be ${roundUp(max)}°. The low will be ${roundUp(min)}°.`
+  descriptionParagraph.textContent = `Today: ${weatherDescription}. The high will be ${roundUp(max)}°. The low will be ${roundUp(min)}°.`
 
   description.appendChild(descriptionParagraph)
 
@@ -278,9 +281,9 @@ export function createGeneralInfo(weatherObj) {
 
   windTitle.textContent = "WIND"
 
-  const compassDirection = findCompassDirection(windDeg)
+  const windDirection = findWindDirection(windDeg)
 
-  windValue.textContent = `${compassDirection} ${roundUp(handleCorrectMetric(windSpeed))} km/hr`
+  windValue.textContent = `${windDirection} ${roundUp(handleCorrectMetric(windSpeed))} km/hr`
 
   windTitle.classList.add("generalInfo-title")
   windValue.classList.add("generalInfo-value")

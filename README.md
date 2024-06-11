@@ -4,7 +4,7 @@ This project displays weather data for a city, from an api after user search(or 
 
 # Technologies used
 
-- Html, Css, Javascript
+- HTML, CSS, JAVASCRIPT
 - Api used is open weather one call
 - Date-fns library, font-awesome library
 - Other Webpack, prettier, babel

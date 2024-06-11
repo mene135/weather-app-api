@@ -1,13 +1,7 @@
-import { getCordinates, getWeather } from "./apiFunctions"
 import {
-  createMainDisplay,
-  createMainInfo,
-  createHourlyForecast,
-  createDescription,
-  createDailyForecast,
-  createGeneralInfo,
-} from "./builderFunctions"
-import { clearContentWrapper } from "./helperFunctions"
+  convertMetersPerSecondToKhH,
+  convertMilesPerHourToKhH,
+} from "./helperFunctions"
 
 export function handleSearchError(err) {
   document.querySelector(".toast-message").textContent = `${err}`
@@ -15,6 +9,7 @@ export function handleSearchError(err) {
 }
 
 export function handleMediaQueryMin768(event) {
+  // Handles the allocation of the general info section while also checking if it exists.
   const generalInfoSection = document.querySelector(".generalInfoSection")
   const dailyForecastSection = document.querySelector(".dailyForecastSection")
   const contentWrapper = document.querySelector(".weather-content-wrapper")
@@ -30,50 +25,13 @@ export function handleMediaQueryMin768(event) {
 
 export const mediaQueryMin768 = window.matchMedia("(min-width: 768px")
 
-export async function handleCitySearch(city) {
-  clearContentWrapper()
-  document.querySelector(".loader").classList.remove("loader-isHidden")
-  document.querySelector(".toast").classList.add("toast-isHidden")
+export function handleCorrectMetric(windSpeed) {
+  const selected = document.querySelector(".selectedMetric")
 
-  const weatherContentWrapper = document.createElement("div")
-  weatherContentWrapper.classList.add("weather-content-wrapper")
-
-  document.querySelector("main").appendChild(weatherContentWrapper)
-
-  let coordinatesObj
-
-  try {
-    coordinatesObj = await getCordinates(city)
-  } catch (err) {
-    document.querySelector(".loader").classList.add("loader-isHidden")
-    handleSearchError(err)
-    return
+  /* If selected metric is celsius wind speed provided by the Api will be in meters per second, if metric selected is fahrenheit it will be provided in miles per hour. */
+  if (selected.classList.contains("metric-celsius")) {
+    return convertMetersPerSecondToKhH(windSpeed)
   }
 
-  const { lat, lon } = coordinatesObj
-
-  const selectedMetric = document.querySelector(".selectedMetric")
-
-  let metricForApi
-
-  if (selectedMetric.classList.contains("metric-celsius")) {
-    metricForApi = "metric"
-  }
-
-  if (selectedMetric.classList.contains("metric-fahrenheit")) {
-    metricForApi = "imperial"
-  }
-
-  const weatherObj = await getWeather(lat, lon, metricForApi)
-
-  document.querySelector(".loader").classList.add("loader-isHidden")
-
-  createMainDisplay()
-  createMainInfo(coordinatesObj, weatherObj)
-  createHourlyForecast(weatherObj)
-  createDescription(weatherObj.daily[0])
-  createDailyForecast(weatherObj.daily)
-  createGeneralInfo(weatherObj)
-
-  handleMediaQueryMin768(mediaQueryMin768)
+  return convertMilesPerHourToKhH(windSpeed)
 }
